@@ -1,0 +1,25 @@
+#include('./partial/header.html', {title: '文章归档'})
+<div class="main-content archive-page clearfix">
+    <div class="categorys-item">
+        #for(spot : spots)
+        <div class="categorys-title">景点名称：${spot.name}</div>
+        <div class="post-lists">
+            <div class="post-lists-body">
+                <div class="post-list-item">
+                    <div class="post-list-item-container">
+                        <div class="item-label">
+                            <div class="item-title">
+                                <div>景点地址：${spot.address}</div>
+                            </div>
+                            <div class="item-meta clearfix">
+                                <div class="item-meta-date">联系电话： ${spot.phone}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        #end
+    </div>
+</div>
+#include('./partial/footer.html')
