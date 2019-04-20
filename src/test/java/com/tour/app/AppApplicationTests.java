@@ -1,7 +1,9 @@
 package com.tour.app;
 
+import com.tour.app.model.entity.ResponseInfo;
 import com.tour.app.model.entity.Tag;
 import com.tour.app.model.mapper.TagMapper;
+import com.tour.app.service.ContentService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +20,15 @@ public class AppApplicationTests {
 
     @Autowired
     TagMapper tagMapper;
+
+    @Autowired
+    ContentService contentService;
     @Test
     public void contextLoads() {
 
-        Tag t = new Tag();
+        ResponseInfo release = contentService.release();
 
-        t.setName("aaa");
-
-        tagMapper.add(t);
-
-        System.out.println(t.getId());
-
+        System.out.println(release);
     }
 
 }

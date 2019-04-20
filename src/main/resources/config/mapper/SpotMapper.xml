@@ -15,4 +15,8 @@
         SELECT * FROM t_spot WHERE spotname=#{spotname}
 
     </select>
+
+    <select id="all" resultType="com.tour.app.model.entity.Spot">
+            SELECT * FROM t_spot
+    </select>
 </mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tour.app.model.mapper.CommentsMapper">
+
+    <insert id="add" useGeneratedKeys="true" keyColumn="coid" keyProperty="coid">
+
+        INSERT INTO t_comments ( coid, cid, created, author, author_id,mail, content, state )
+        VALUES
+        (NULL,#{cid},NOW(),#{author},#{authorId} ,#{mail},#{content},0)
+
+    </insert>
+    <select id="selectByCid" resultType="com.tour.app.model.entity.Comments">
+
+        SELECT * FROM t_comments WHERE state=1 AND cid=#{id}
+
+    </select>
+
+    <update id="updateById">
+        UPDATE t_comments SET state=1 WHERE coid=#{coid}
+    </update>
+</mapper>

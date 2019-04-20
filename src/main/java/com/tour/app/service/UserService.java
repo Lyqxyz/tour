@@ -27,7 +27,11 @@ public class UserService {
         }
 
         session.setAttribute("user",login);
-        return ReponseUtil.ok();
+
+        ResponseInfo ok = ReponseUtil.ok();
+
+        ok.getInfo().put("data",login);
+        return ok;
     }
 
     public ResponseInfo reg(Users users){

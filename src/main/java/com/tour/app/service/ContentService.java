@@ -8,6 +8,8 @@ import com.tour.app.untils.ReponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ContentService {
 
@@ -24,4 +26,16 @@ public class ContentService {
 
         return ok;
     }
+
+    public ResponseInfo release(){
+
+        List<Contents> release = contentMapper.release();
+
+        ResponseInfo ok = ReponseUtil.ok();
+
+        ok.getInfo().put("data",release);
+
+        return ok;
+    }
+
 }

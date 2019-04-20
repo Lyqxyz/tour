@@ -104,12 +104,15 @@
 
             axios.post('/login',postData).then(res=>{
 
-              let {code}=res.data;
+              let {code,info}=res.data;
 
               if(code==='-1'){
 
                 alert('请检查账号和密码');
               }else{
+
+                sessionStorage.setItem('user',JSON.stringify(info.data))
+
                 alert('登录成功')
               }
 

@@ -25,4 +25,19 @@
                 #{content},#{authorId},#{type},#{state},#{tags},0,0,#{allowComment}
                  )
     </insert>
+    <select id="release" resultType="com.tour.app.model.entity.Contents">
+        SELECT * FROM t_contents WHERE state =1
+    </select>
+    <update id="updateHit">
+        UPDATE t_contents SET hits=hits+1 WHERE cid=#{cid}
+    </update>
+
+    <select id="selectById" resultType="com.tour.app.model.entity.Contents">
+        SELECT * FROM t_contents WHERE state =1 AND cid=#{cid}
+    </select>
+
+    <update id="updateById">
+
+
+    </update>
 </mapper>

@@ -7,6 +7,7 @@ import com.tour.app.untils.ReponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -29,6 +30,20 @@ public class SpotService {
             error.setMsg("景点已经存在了");
             return error;
         }
+
+    }
+
+
+    public ResponseInfo all(){
+
+
+        List<Spot> all = spotMapper.all();
+
+        ResponseInfo ok = ReponseUtil.ok();
+
+        ok.getInfo().put("data",all);
+
+        return ok;
 
     }
 }
