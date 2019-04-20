@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tour.app.model.mapper.ContentMapper">
+    <insert id="add" useGeneratedKeys="true" keyProperty="cid" keyColumn="cid">
+        INSERT INTO t_contents (
+            cid,
+            title,
+            slug,
+            thumb_img,
+            created,
+            modified,
+            content,
+            author_id,
+            type,
+            state,
+            tags,
+            hits,
+            comments_num,
+            allow_comment
+            )
+            VALUES
+                (NULL,#{title},#{slug},#{thumbImg},NOW(),NOW(),
+                #{content},#{authorId},#{type},#{state},#{tags},0,0,#{allowComment}
+                 )
+    </insert>
+</mapper>

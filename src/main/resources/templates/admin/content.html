@@ -26,7 +26,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
   </head>
   <body>
-    <div class="page" id="spot">
+    <div class="page" id="con">
       <!-- Main Navbar-->
       <header class="header">
         <nav class="navbar">
@@ -127,7 +127,7 @@
                     <li><a href="index.html"> <i class="icon-home"></i>Home </a></li>
                     <li><a href="tables.html"> <i class="icon-grid"></i>Tables </a></li>
                     <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
-                    <li class="active"><a href="addSpot.html"> <i class="icon-padnote"></i>Forms </a></li>
+                    <li class="active"><a href="content.html"> <i class="icon-padnote"></i>Forms </a></li>
                     <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Example dropdown </a>
                       <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
                         <li><a href="#">Page</a></li>
@@ -162,72 +162,109 @@
           <section class="forms"> 
             <div class="container-fluid">
               <div class="row">
-
-                <!-- Form Elements -->
-                <div class="col-lg-12">
+                <!-- Basic Form-->
+                <div class="col-lg-6">
                   <div class="card">
-                    <div class="card-close">
-                      <div class="dropdown">
-                        <button type="button" id="closeCard5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
-                        <div aria-labelledby="closeCard5" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
-                      </div>
-                    </div>
                     <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">添加景点</h3>
+                      <h3 class="h4">信息</h3>
                     </div>
                     <div class="card-body">
-                      <form class="form-horizontal">
-                        <div class="form-group row">
-                          <label for="name" class="col-sm-3 form-control-label">景点名称</label>
-                          <div class="col-sm-9">
-                            <input id="name" v-model="spotname" type="text" class="form-control">
-                          </div>
+                      <p></p>
+                      <form>
+                        <div class="form-group">
+                          <label for="title" class="form-control-label">一级标题</label>
+                          <input v-model="title" id="title" type="text" placeholder="Email Address" class="form-control">
                         </div>
-                        <div class="line"></div>
-                        <div class="form-group row">
-                          <label for="address" class="col-sm-3 form-control-label">景点地址</label>
-                          <div class="col-sm-9">
-                            <input id="address" v-model="spotaddress" type="text" class="form-control"><small class="help-block-none"></small>
-                          </div>
-                        </div>
-                        <div class="line"></div>
-                        <div class="form-group row">
-                          <label for="phone" class="col-sm-3 form-control-label">景点电话</label>
-                          <div class="col-sm-9">
-                            <input id="phone" v-model="spotphone" type="text" class="form-control"><small class="help-block-none"></small>
-                          </div>
-                        </div>
-
-                        <div class="form-group row">
-                          <label for="url" class="col-sm-3 form-control-label">景点官网链接</label>
-                          <div class="col-sm-9">
-                            <input id="url" v-model="spoturl" type="text" class="form-control"><small class="help-block-none"></small>
-                          </div>
-                        </div>
-
-                        <div class="form-group row">
-                          <label for="pic" class="col-sm-3 form-control-label">景点图片</label>
-                          <div class="col-sm-9">
-                            <input id="pic" @change="fileChange" type="file" class="form-control"><small class="help-block-none"></small>
-                          </div>
-                        </div>
-                        <div class="col-lg-12">
-                          <img :src="src" alt="">
-                        </div>
-                        <div class="form-group row">
-                          <div class="col-sm-4 offset-sm-3">
-                            <button type="submit" class="btn btn-secondary">返回列表</button>
-                            <button @click="save" type="submit" class="btn btn-primary">保存</button>
-                          </div>
+                        <div class="col-sm-9">
+                          <label for="c" class="col-sm-3 form-control-label">类别</label>
+                          <select v-model="type" id="c" multiple="multiple" class="form-control">
+                            <option v-for="item in c" :key="item.id">{{item.name}}</option>
+                          </select>
                         </div>
                       </form>
                     </div>
                   </div>
                 </div>
+                <!-- Basic Form-->
+                <div class="col-lg-6">
+                  <div class="card">
+
+                    <div class="card-header d-flex align-items-center">
+                      <h3 class="h4">信息</h3>
+                    </div>
+                    <div class="card-body">
+                      <p></p>
+                      <form>
+                        <div class="form-group">
+                          <label for="slug" class="form-control-label">二级标题</label>
+                          <input v-model="slug" id="slug" type="text" placeholder="Email Address" class="form-control">
+                        </div>
+                        <div class="col-sm-9">
+                          <label for="tag" class="col-sm-3 form-control-label">标签</label>
+                          <select v-model="tag" id="tag" multiple="multiple" class="form-control">
+                            <option v-for="item in tags" :key="item.id">{{item.name}}</option>
+                          </select>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-12">
+                  <label for="content">内容</label>
+                  <textarea v-model="content" id="content" class="form-control" rows="25">
+                  </textarea>
+                </div>
+                <div class="col-lg-12">
+                  <img :src="src" alt="">
+                </div>
+                <div class="col-lg-5">
+                  <div class="form-group row">
+                    <label class="col-sm-3 form-control-label">是否评论<br><small class="text-primary"></small></label>
+                    <div class="col-sm-9">
+                      <div>
+                        <input v-model="allowComment" id="optionsRadios1" type="radio" checked="checked" value="0" name="optionsRadios">
+                        <label for="optionsRadios1">是</label>
+                      </div>
+                      <div>
+                        <input v-model="allowComment" id="optionsRadios2" type="radio" value="1" name="optionsRadios">
+                        <label for="optionsRadios2">否</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-5">
+                  <div class="form-group row">
+                    <label for="fileInput" class="col-sm-3 form-control-label">添加图片</label>
+                    <div class="col-sm-9">
+                      <input @change="fileChange" id="fileInput" type="file" class="form-control-file">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-2">
+                  <button @click="add('ok',event)" class="btn btn-info">发布</button>
+                  <button @click="add('no',event)" class="btn btn-info">存草稿</button>
+                </div>
               </div>
             </div>
-          </section>
 
+          </section>
+          <!-- Page Footer-->
+          <footer class="main-footer">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-6">
+                  <p>Your company &copy; 2017-2019</p>
+                </div>
+                <div class="col-sm-6 text-right">
+                  <p>Design by Bootstrapious.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+                  <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+                </div>
+              </div>
+            </div>
+          </footer>
         </div>
       </div>
     </div>
@@ -243,81 +280,118 @@
     <script th:src="@{/js/vue.min.js}"></script>
     <script th:src="@{/js/axios.min.js}"></script>
     <script>
-      let vm = new Vue({
+      let vm= new Vue({
+        el:'#con',
 
-        el:'#spot',
+        created(){
+
+          axios.get("/c/all").then(res=>{
+
+            this.c=res.data.info.data
+
+
+          })
+
+          axios.get("/tag/all").then(res=>{
+
+            this.tags=res.data.info.data
+
+          })
+
+
+
+
+        },
         data:{
-
-          spotname:'',
-          spotaddress:'',
-          spotphone:'',
-          spoturl:'',
-          spotpic:'',
+          title:'',
+          slug:'',
+          type:'',
+          tag:'',
+          content:'',
+          file:'',
+          allowComment:'',
           src:'',
-          file:''
+          state:'',
+          c:[
+
+          ],
+          tags:[
+
+          ],
 
         },
         methods:{
-
-          save(e){
+          add(ok,e){
 
             e.preventDefault()
-            if(this.spotname===''){
 
-              alert('名称不能为空')
+            if(this.title===''){
+              alert('请填写一级标题')
               return;
             }
-            if(this.spotaddress===''){
-
-              alert('地址不能为空')
-              return;
-            }
-            if(this.spotphone===''){
-
-              alert('电话不能为空')
+            if(this.content===''){
+              alert("请填写内容")
               return;
             }
             if(this.file===''){
-
-              alert('请选择一张图片')
+              alert('请选择一张照片')
+              return;
+            }
+            if(this.allowComment===''){
+              alert("请选择是否评价")
+              return;
+            }
+            if(this.content.length>=3000){
+              alert("内容不得超过3000自")
               return;
             }
 
-            let data = `spotphone=${this.spotphone}&spotaddress=${this.spotaddress}&spotname=${this.spotname}`
+            let type=this.type===''?['默认分类'].join(','):this.type.join(',')
+            let tag=this.tag===''?['默认标签'].join(','):this.tag.join(',')
+            let fd=  new FormData()
 
-            let fd= new FormData()
-
-            fd.append('spotphone',this.spotphone)
-
-            fd.append('spotaddress',this.spotaddress)
-
-            fd.append('spoturl',this.spoturl)
-
+            fd.append('title',this.title)
+            fd.append('slug',this.slug)
+            fd.append('content',this.content)
+            fd.append('type',type)
+            fd.append('tags',tag)
             fd.append('file',this.file)
+            fd.append('allowComment',this.allowComment)
 
-            axios.post('/spot/add',fd).then(res=>{
+            if(ok==='ok'){
 
-              let {code,msg} = res.data;
-              if(code==='-1'){
-                alert(msg)
-              }else{
+              fd.append('state','1')
+            }else{
 
-                this.spotphone=''
-                this.spotaddress=''
-                this.spotname=''
-                this.spoturl=''
-                this.src=''
-                this.file=''
-                alert(msg)
+              fd.append('state','0')
+            }
+
+            axios.post('/con/add',fd,{
+              headers:{
+                'Content-Type':'multipart/form-data'
               }
+            }).then(res=>{
 
+              let {code,msg}=res.data
+
+              if(code==='-1'){
+
+                alert(msg)
+              }else {
+                alert(msg)
+                this.title=''
+                this.content=''
+                this.slug=''
+                this.file=''
+                this.src=''
+              }
 
             }).catch(err=>{
 
               console.log(err)
-              alert('服务器错误')
-
             })
+
+
 
           },
           fileChange(e){
@@ -337,6 +411,7 @@
 
           }
         }
+
 
 
       })

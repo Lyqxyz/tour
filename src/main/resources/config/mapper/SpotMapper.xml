@@ -7,8 +7,10 @@
 
 
     <insert id="add">
-        INSERT INTO t_spot(id,spotname,spotaddress,spotphone) VALUES(NULL,#{spotname},#{spotaddress},#{spotphone})
+        INSERT INTO t_spot(id,spotname,spotaddress,spotphone,spoturl,spotpic) VALUES(NULL,#{spotname},
+        #{spotaddress},#{spotphone},#{spoturl},#{spotpic})
     </insert>
+
     <select id="check" resultType="com.tour.app.model.entity.Spot">
         SELECT * FROM t_spot WHERE spotname=#{spotname}
 

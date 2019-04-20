@@ -26,7 +26,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
   </head>
   <body>
-    <div class="page" id="spot">
+    <div class="page" id="tc">
       <!-- Main Navbar-->
       <header class="header">
         <nav class="navbar">
@@ -127,7 +127,7 @@
                     <li><a href="index.html"> <i class="icon-home"></i>Home </a></li>
                     <li><a href="tables.html"> <i class="icon-grid"></i>Tables </a></li>
                     <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
-                    <li class="active"><a href="addSpot.html"> <i class="icon-padnote"></i>Forms </a></li>
+                    <li class="active"><a href="tags.html"> <i class="icon-padnote"></i>Forms </a></li>
                     <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Example dropdown </a>
                       <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
                         <li><a href="#">Page</a></li>
@@ -162,72 +162,97 @@
           <section class="forms"> 
             <div class="container-fluid">
               <div class="row">
-
-                <!-- Form Elements -->
-                <div class="col-lg-12">
+                <!-- Basic Form-->
+                <div class="col-lg-6">
                   <div class="card">
                     <div class="card-close">
                       <div class="dropdown">
-                        <button type="button" id="closeCard5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
-                        <div aria-labelledby="closeCard5" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+                        <button type="button" id="closeCard1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                        <div aria-labelledby="closeCard1" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
                       </div>
                     </div>
                     <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">添加景点</h3>
+                      <h3 class="h4">Basic Form</h3>
                     </div>
                     <div class="card-body">
                       <form class="form-horizontal">
-                        <div class="form-group row">
-                          <label for="name" class="col-sm-3 form-control-label">景点名称</label>
-                          <div class="col-sm-9">
-                            <input id="name" v-model="spotname" type="text" class="form-control">
-                          </div>
-                        </div>
                         <div class="line"></div>
                         <div class="form-group row">
-                          <label for="address" class="col-sm-3 form-control-label">景点地址</label>
+                          <label for="c1" class="col-sm-3 form-control-label">所有分类</label>
                           <div class="col-sm-9">
-                            <input id="address" v-model="spotaddress" type="text" class="form-control"><small class="help-block-none"></small>
+                            <select id="c1" name="account" class="form-control mb-3">
+                              <option v-for="item in c" :key="item.id" value="item.id">{{item.name}}</option>
+                            </select>
                           </div>
                         </div>
+                        <div class="form-group">       
+                          <label for="c" class="form-control-label">新的分类</label>
+                          <input v-model="cname" id="c" type="text" placeholder="Password" class="form-control">
+                        </div>
+                        <div class="form-group">       
+                          <input @click="sub" type="submit" value="添加" class="btn btn-primary">
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <!-- Horizontal Form-->
+                <div class="col-lg-6">
+                  <div class="card">
+                    <div class="card-close">
+                      <div class="dropdown">
+                        <button type="button" id="closeCard2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                        <div aria-labelledby="closeCard2" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+                      </div>
+                    </div>
+                    <div class="card-header d-flex align-items-center">
+                      <h3 class="h4">Horizontal Form</h3>
+                    </div>
+                    <div class="card-body">
+                      <form class="form-horizontal">
                         <div class="line"></div>
                         <div class="form-group row">
-                          <label for="phone" class="col-sm-3 form-control-label">景点电话</label>
+                          <label for="t2" class="col-sm-3 form-control-label">已有标签</label>
                           <div class="col-sm-9">
-                            <input id="phone" v-model="spotphone" type="text" class="form-control"><small class="help-block-none"></small>
+                            <select id="t2" name="account" class="form-control mb-3">
+                                <option v-for="item in tag" :key="item.id" value="item.id">{{item.name}}</option>
+                            </select>
                           </div>
-                        </div>
 
+                        </div>
                         <div class="form-group row">
-                          <label for="url" class="col-sm-3 form-control-label">景点官网链接</label>
+                          <label for="inputHorizontalWarning" class="col-sm-3 form-control-label">新的标签</label>
                           <div class="col-sm-9">
-                            <input id="url" v-model="spoturl" type="text" class="form-control"><small class="help-block-none"></small>
+                            <input v-model="tname"  id="inputHorizontalWarning" type="text" placeholder="请输入标签名" class="form-control form-control-warning"><small class="form-text"></small>
                           </div>
                         </div>
-
-                        <div class="form-group row">
-                          <label for="pic" class="col-sm-3 form-control-label">景点图片</label>
-                          <div class="col-sm-9">
-                            <input id="pic" @change="fileChange" type="file" class="form-control"><small class="help-block-none"></small>
-                          </div>
-                        </div>
-                        <div class="col-lg-12">
-                          <img :src="src" alt="">
-                        </div>
-                        <div class="form-group row">
-                          <div class="col-sm-4 offset-sm-3">
-                            <button type="submit" class="btn btn-secondary">返回列表</button>
-                            <button @click="save" type="submit" class="btn btn-primary">保存</button>
+                        <div class="form-group row">       
+                          <div class="col-sm-9 offset-sm-3">
+                            <input @click="tsub" type="submit" value="添加" class="btn btn-primary">
                           </div>
                         </div>
                       </form>
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </section>
-
+          <!-- Page Footer-->
+          <footer class="main-footer">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-6">
+                  <p>Your company &copy; 2017-2019</p>
+                </div>
+                <div class="col-sm-6 text-right">
+                  <p>Design by Bootstrapious.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+                  <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+                </div>
+              </div>
+            </div>
+          </footer>
         </div>
       </div>
     </div>
@@ -242,105 +267,118 @@
     <script th:src="@{/js/front.js}"></script>
     <script th:src="@{/js/vue.min.js}"></script>
     <script th:src="@{/js/axios.min.js}"></script>
-    <script>
-      let vm = new Vue({
 
-        el:'#spot',
-        data:{
+  <script>
 
-          spotname:'',
-          spotaddress:'',
-          spotphone:'',
-          spoturl:'',
-          spotpic:'',
-          src:'',
-          file:''
+    let vm = new Vue({
+      el:'#tc',
+      created(){
+
+        axios.get("/c/all").then(res=>{
+
+          this.c=res.data.info.data
+
+
+        })
+
+        axios.get("/tag/all").then(res=>{
+
+          this.tag=res.data.info.data
+
+        })
+
+
+
+
+      },
+      data:{
+        c:[
+
+        ],
+        tag:[
+
+        ],
+
+        cname:'',
+        tname:''
+
+      },
+      methods:{
+        sub(e){
+          e.preventDefault();
+          if(this.cname===''){
+            alert("类名不能为空")
+            return;
+          }
+          for (let i = 0; i <this.c.length ; i++) {
+
+            if(this.c[i].name===this.cname){
+              alert("类名已经存在")
+              return;
+            }
+          }
+
+          let data= `name=${this.cname}`
+          axios.post('/c/add',data).then(res=>{
+
+            let {code,msg}=res.data
+
+            if(code==='-1'){
+
+              alert(msg)
+            }else{
+
+              this.cname='';
+              alert(msg)
+            }
+          }).catch(err=>{
+
+            console.log(err)
+
+          })
 
         },
-        methods:{
-
-          save(e){
-
-            e.preventDefault()
-            if(this.spotname===''){
-
-              alert('名称不能为空')
-              return;
-            }
-            if(this.spotaddress===''){
-
-              alert('地址不能为空')
-              return;
-            }
-            if(this.spotphone===''){
-
-              alert('电话不能为空')
-              return;
-            }
-            if(this.file===''){
-
-              alert('请选择一张图片')
-              return;
-            }
-
-            let data = `spotphone=${this.spotphone}&spotaddress=${this.spotaddress}&spotname=${this.spotname}`
-
-            let fd= new FormData()
-
-            fd.append('spotphone',this.spotphone)
-
-            fd.append('spotaddress',this.spotaddress)
-
-            fd.append('spoturl',this.spoturl)
-
-            fd.append('file',this.file)
-
-            axios.post('/spot/add',fd).then(res=>{
-
-              let {code,msg} = res.data;
-              if(code==='-1'){
-                alert(msg)
-              }else{
-
-                this.spotphone=''
-                this.spotaddress=''
-                this.spotname=''
-                this.spoturl=''
-                this.src=''
-                this.file=''
-                alert(msg)
-              }
-
-
-            }).catch(err=>{
-
-              console.log(err)
-              alert('服务器错误')
-
-            })
-
-          },
-          fileChange(e){
-
-            let file = e.target.files[0]
-
-            this.file=file
-
-            let fd = new FileReader()
-
-            fd.readAsDataURL(file)
-
-            fd.onload=(res)=>{
-
-              this.src=res.target.result
-            }
-
+        tsub(e){
+          e.preventDefault();
+          if(this.tname===''){
+            alert("标签名不能为空")
+            return;
           }
+          for (let i = 0; i <this.tag.length ; i++) {
+
+            if(this.tag[i].name===this.tname){
+              alert("标签名已经存在")
+              return;
+            }
+          }
+
+          let data= `name=${this.tname}`
+          axios.post('/tag/add',data).then(res=>{
+
+            let {code,msg}=res.data
+
+            if(code==='-1'){
+
+              alert(msg)
+            }else{
+
+              this.tname='';
+              alert(msg)
+            }
+          }).catch(err=>{
+
+            console.log(err)
+
+          })
+
         }
 
+      }
 
-      })
 
-    </script>
+
+    })
+
+  </script>
   </body>
 </html>

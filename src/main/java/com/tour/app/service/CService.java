@@ -1,34 +1,57 @@
 package com.tour.app.service;
 
+import com.tour.app.model.entity.C;
 import com.tour.app.model.entity.ResponseInfo;
-import com.tour.app.model.entity.Spot;
-import com.tour.app.model.mapper.SpotMapper;
+import com.tour.app.model.mapper.CMapper;
 import com.tour.app.untils.ReponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
-public class SpotService {
+public class CService {
 
     @Autowired
-    SpotMapper spotMapper;
+    CMapper cMapper;
 
-    public ResponseInfo add(Spot spot){
 
-        Spot check = spotMapper.check(spot.getSpotname());
+    public ResponseInfo add(C c){
+
+        C check = cMapper.check(c.getName());
+
         if(Objects.isNull(check)){
-            spotMapper.add(spot);
+
+            Integer add = cMapper.add(c);
+
             ResponseInfo ok = ReponseUtil.ok();
+
             ok.setMsg("添加成功");
             return ok;
-
         }else{
+
             ResponseInfo error = ReponseUtil.error();
-            error.setMsg("景点已经存在了");
+
+            error.setMsg("类名已经存在");
+
             return error;
         }
+
+
+    }
+
+
+    public ResponseInfo all(){
+
+        List<C> all = cMapper.all();
+
+        ResponseInfo ok = ReponseUtil.ok();
+
+        ok.getInfo().put("data",all);
+
+
+        return ok;
 
     }
 }

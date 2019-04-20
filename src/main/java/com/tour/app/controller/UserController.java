@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class UserController {
 
@@ -17,9 +19,9 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseBody
-    public Object login(Users users){
+    public Object login(Users users, HttpSession session){
 
-        ResponseInfo login = userService.login(users);
+        ResponseInfo login = userService.login(users,session);
 
         return login;
     }

@@ -3,6 +3,8 @@ package com.tour.app.model.entity;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * 文章
  *
@@ -30,12 +32,12 @@ public class Contents  {
     /**
      * 文章创建时间戳
      */
-    private Integer created;
+    private Date created;
 
     /**
      * 文章修改时间戳
      */
-    private Integer modified;
+    private Date modified;
 
     /**
      * 文章内容
@@ -56,31 +58,22 @@ public class Contents  {
      * 文章类型： PAGE、POST
      */
     private String type;
-
-    /**
-     * 内容类型，markdown或者html
-     */
-    private String fmtType;
-
     /**
      * 文章缩略图
      */
     private String thumbImg;
-
     /**
      * 标签列表
      */
     private String tags;
 
-    /**
-     * 分类列表
-     */
-    private String categories;
+//    /**
+//     * 分类列表
+//     */
+//    private String categories;
 
-    /**
-     * 内容状态
-     */
-    private String status;
+
+    private String state;
 
     /**
      * 内容所属评论数
@@ -90,16 +83,8 @@ public class Contents  {
     /**
      * 是否允许评论
      */
-    private Boolean allowComment;
+    private Integer allowComment;
 
-    /**
-     * 是否允许ping
-     */
-    private Boolean allowPing;
 
-    /**
-     * 允许出现在Feed中
-     */
-    private Boolean allowFeed;
 
 }

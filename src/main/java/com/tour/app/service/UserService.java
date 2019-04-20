@@ -7,6 +7,7 @@ import com.tour.app.untils.ReponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import javax.xml.ws.ServiceMode;
 import java.util.Objects;
 
@@ -16,7 +17,7 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
-    public ResponseInfo login(Users users){
+    public ResponseInfo login(Users users, HttpSession session){
 
         Users login = userMapper.login(users);
 
@@ -25,6 +26,7 @@ public class UserService {
             return ReponseUtil.error();
         }
 
+        session.setAttribute("user",login);
         return ReponseUtil.ok();
     }
 

@@ -24,5 +24,9 @@ public class Spot {
 
     private String spotphone;
 
+    private String spotpic;
+
+    private String spoturl;
+
 
 }
