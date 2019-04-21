@@ -33,10 +33,6 @@ public class Users  {
      */
     private String email;
 
-    /**
-     * 用户的主页
-     */
-    private String homeUrl;
 
     /**
      * 用户显示的名称
@@ -61,6 +57,6 @@ public class Users  {
     /**
      * 用户组
      */
-    private String groupName;
+    private String state;
 
 }

@@ -12,9 +12,9 @@ public interface ContentMapper {
 
     List<Contents> release();
 
-    Integer updateHit(String cid);
+    Integer updateHit(Integer cid);
 
-    Contents selectById(String id);
+    Contents selectById(Integer id);
 
     Integer updateById(String id);
 

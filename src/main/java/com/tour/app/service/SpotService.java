@@ -1,5 +1,7 @@
 package com.tour.app.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.tour.app.model.entity.ResponseInfo;
 import com.tour.app.model.entity.Spot;
 import com.tour.app.model.mapper.SpotMapper;
@@ -34,14 +36,17 @@ public class SpotService {
     }
 
 
-    public ResponseInfo all(){
+    public ResponseInfo all(Integer pageSize,Integer pageNum){
 
+        PageHelper.startPage(pageSize,pageNum);
 
         List<Spot> all = spotMapper.all();
 
+        PageInfo<Spot> pageInfo=new PageInfo<>(all);
+
         ResponseInfo ok = ReponseUtil.ok();
 
-        ok.getInfo().put("data",all);
+        ok.getInfo().put("data",pageInfo);
 
         return ok;
 

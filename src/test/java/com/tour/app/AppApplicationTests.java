@@ -26,9 +26,6 @@ public class AppApplicationTests {
     @Test
     public void contextLoads() {
 
-        ResponseInfo release = contentService.release();
-
-        System.out.println(release);
     }
 
 }

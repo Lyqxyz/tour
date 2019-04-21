@@ -9,6 +9,7 @@ import com.tour.app.untils.ReponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,10 +47,41 @@ public class ContentController {
 
     }
 
+    @ResponseBody
+    @GetMapping(path = "/hits/{id}")
+    public Object hits(@PathVariable(value = "id")Integer id){
+
+        ResponseInfo hits = service.hits(id);
+
+        return hits;
+
+    }
+
+
+    @ResponseBody
+    @GetMapping(path = "/con/info/{pageSize}/{pageNum}")
+    public Object info(@PathVariable(value = "pageSize")Integer pageSize,
+                       @PathVariable(value = "pageNum")Integer pageNum){
+
+
+        ResponseInfo release = service.release(pageSize,pageNum);
+
+
+        return release;
+
+    }
+
+
     @GetMapping("/con/addView")
     public String addView(){
 
         return "admin/content";
+    }
+
+    @GetMapping("/con/info")
+    public String info(){
+
+        return "index/tourlog";
     }
 
 }

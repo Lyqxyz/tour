@@ -1,5 +1,8 @@
 package com.tour.app.service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.tour.app.model.entity.Comments;
 import com.tour.app.model.entity.Contents;
 import com.tour.app.model.entity.ResponseInfo;
@@ -27,7 +30,20 @@ public class ContentService {
         return ok;
     }
 
-    public ResponseInfo release(){
+
+    public ResponseInfo hits(Integer id){
+
+        Integer integer = contentMapper.updateHit(id);
+
+        ResponseInfo ok = ReponseUtil.ok();
+
+        ok.setMsg("点赞成功");
+
+        return ok;
+
+    }
+
+    public ResponseInfo all(){
 
         List<Contents> release = contentMapper.release();
 
@@ -36,6 +52,25 @@ public class ContentService {
         ok.getInfo().put("data",release);
 
         return ok;
+    }
+
+    public ResponseInfo release(Integer pageSize,Integer pageNum){
+
+
+        PageHelper.startPage(pageSize,pageNum);
+
+        List<Contents> release = contentMapper.release();
+
+        PageInfo<Contents> pageInfo= new PageInfo<>(release);
+
+
+        ResponseInfo ok = ReponseUtil.ok();
+
+        ok.getInfo().put("data",pageInfo);
+
+        return ok;
+
+
     }
 
 }

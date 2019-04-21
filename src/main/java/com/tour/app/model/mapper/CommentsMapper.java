@@ -10,7 +10,7 @@ public interface CommentsMapper {
 
     Integer add(Comments comments);
 
-    List<Comments> selectByCid(String cid);
+    List<Comments> selectByCid(Integer cid);
 
     Integer updateById(String coid);
 

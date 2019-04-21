@@ -1,8 +1,10 @@
 package com.tour.app.controller;
 
+import com.sun.net.httpserver.HttpsConfigurator;
 import com.tour.app.model.entity.ResponseInfo;
 import com.tour.app.model.entity.Users;
 import com.tour.app.service.UserService;
+import com.tour.app.untils.ReponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,4 +49,14 @@ public class UserController {
 
         return "admin/register";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+
+        session.removeAttribute("user");
+
+       return "redirect:/loginView";
+
+    }
+
 }

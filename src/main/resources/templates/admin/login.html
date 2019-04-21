@@ -55,7 +55,7 @@
                       <label for="login-password" class="label-material"></label>
                     </div><a @click="submit" id="login" href="index.html" class="btn btn-primary">登录</a>
                     <!-- This should be submit button but I replaced it with <a> for demo purposes-->
-                  </form><a href="#" class="forgot-pass">忘记密码</a><br><small>还没有账号 </small><a th:href="@{/regView}" class="signup">注册</a>
+                  </form><small>还没有账号 </small><a th:href="@{/regView}" class="signup">注册</a>
                 </div>
               </div>
             </div>
@@ -86,6 +86,11 @@
           username:'',
           pwd:''
         },
+        created(){
+
+          sessionStorage.removeItem('user')
+
+        },
         methods:{
 
           submit(e){
@@ -113,7 +118,7 @@
 
                 sessionStorage.setItem('user',JSON.stringify(info.data))
 
-                alert('登录成功')
+                window.location="/home"
               }
 
             }).catch(err=>{

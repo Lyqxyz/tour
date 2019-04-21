@@ -1,0 +1,210 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>详细页</title>
+	<link th:href="@{/index/css/bootstrap.css}" rel="stylesheet" type="text/css" media="all">
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script th:src="@{/index/js/jquery-1.11.0.min.js}"></script>
+	<script type="text/javascript" th:src="@{/index/js/bootstrap.js}"></script>
+	<!-- Custom Theme files -->
+	<link th:href="@{/index/css/style.css}" rel="stylesheet" type="text/css" media="all"/>
+	<link rel="stylesheet" th:href="@{/index/css/flexslider.css}" type="text/css" media="screen" />
+	<!-- Custom Theme files -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }>
+	</script>
+	<meta name="keywords" content="" />
+	<!--Google Fonts-->
+	<link th:href="@{/index/css/font-awesome.min.css}" rel="stylesheet" type="text/css" media="all" />
+<!---<link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>-->
+<!-- start-smoth-scrolling -->
+<script type="text/javascript" th:src="@{/index/js/move-top.js}"></script>
+<script type="text/javascript" th:src="@{/index/js/easing.js}"></script>
+
+	<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+				});
+			});
+	</script>
+<!-- //end-smoth-scrolling -->
+</head>
+<body>
+<!--banner start here-->
+<div class="banner-1">
+	  <div class="container">
+  <!--header start here-->
+		  <div th:replace="index/index::header"></div>
+<!--header end here-->
+
+</div>
+</div>
+<!--banner end here-->
+<!--asingle-->
+<div class="single w3l-5">
+		<div class="container">
+				<div class="single-left1 w3ls-5" th:object="${detail}">
+					<img th:src="@{*{thumbImg}}" alt=" " class="img-responsive">
+					<h2 th:text="*{title}"></h2>
+					<ul>
+					
+						<li><span class="glyphicon glyphicon-text-width" aria-hidden="true"></span><a href="#" th:text="*{slug}"></a></li>
+						<li><span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a href="#" th:text="*{tags}"></a></li>
+						<li><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><a href="#" th:text="*{created}"></a></li>
+						<li><span class="glyphicon glyphicon-globe" aria-hidden="true"></span><a href="#" th:text="*{type}"></a></li>
+						<li><a href="#" id="hits"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></a><a id="num" href="#" th:text="*{hits}"></a></li>
+
+					</ul>
+					<p th:text="*{content}"></p>
+
+				</div>
+				
+				<div class="comments agile-5">
+					<h3>最近评论</h3>
+					<div class="comments-grids" th:if="${#lists.size(comments)>0}">
+						<div class="comments-grid" th:each="item:${comments}">
+							<div class="comments-grid-left">
+								<img th:src="@{/index/images/13.jpg}" alt=" " class="img-responsive">
+							</div>
+							<div class="comments-grid-right">
+								<h4><a href="#" th:text="${item.author}"></a></h4>
+								<ul>
+									<li th:text="${item.created}">25 May 2016 <i>|</i></li>
+									<li><a href="#" th:text="${item.mail}"></a></li>
+								</ul>
+								<p th:text="${item.content}"></p>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+					</div>
+					<p th:if="${#lists.size(comments)==0}">还没有评论</p>
+				</div>
+				<div class="leave-coment-form agileits-5" id="comm">
+					<h3>留下你的评论</h3>
+					<form action="#" method="post">
+						<input id="cid" ref="cid" type="hidden" th:value="${detail.cid}">
+						<input v-model="name" type="text" value="Name " name="name" placeholder="请输入名字">
+						<input v-model="email" type="email" value="Email" name="email" placeholder="请输入邮箱">
+						<textarea v-model="content" type="text" name="comment" placeholder="请输入评论"></textarea>
+						<input @click="sub" type="submit" value="提交评论">
+					</form>
+				</div>
+		</div>
+	</div>
+<!--about-->
+<!--footer-->
+<div th:replace="index/index::footer"></div>
+<!--footer-->
+</body>
+
+<script th:src="@{/index/js/vue.min.js}"></script>
+<script th:src="@{/index/js/axios.min.js}"></script>
+
+<script>
+	let vm = new Vue({
+
+		el:'#comm',
+		data:{
+
+			name:'',
+			email:'',
+			content:''
+
+		},
+		methods:{
+			sub(e){
+
+				e.preventDefault()
+				let user = JSON.parse(sessionStorage.getItem('user'))
+
+				let cid = this.$refs.cid.value
+
+				console.log(user)
+
+				if (!user){
+					alert('你还没有登录');
+					window.location='/loginView'
+					return;
+				}
+				if(this.name===''){
+
+					alert('请留下你的姓名')
+					return;
+				}
+				if(this.email===''){
+
+					alert('请留下你的邮箱')
+					return;
+				}
+				if(this.content===''){
+
+					alert('请留下你的评论')
+					return;
+				}
+				if(this.content.length===100){
+
+					alert('评论有点长了...')
+					return;
+				}
+
+				let data =`cid=${cid}&author=${this.name}
+							&authorId=${user.uid}&mail=${this.email}&content=${this.content}`;
+				axios.post('/comm/add',data).then(res=>{
+
+					let {code,msg} =res.data;
+					if(code==='-1'){
+						alert(msg)
+					}else{
+						alert(msg+'等待审核')
+					}
+
+				}).catch(err=>{
+
+					console.log(err)
+				})
+
+
+
+			}
+
+		}
+	})
+
+	let flag= false;
+	let cidObj = $('#cid')
+	let obj =$('#num')
+	$('#hits').click((e)=>{
+
+		e.preventDefault()
+
+		let cid=cidObj.val();
+
+		if(!flag){
+
+			axios.get(`/hits/${cid}`).then(res=>{
+
+				let {code,msg} = res.data
+
+				alert(msg)
+
+				flag=true;
+
+				obj.text(parseInt(obj.text()) +1)
+
+			}).catch(err=>{
+
+				console.log(err)
+			})
+
+		}else{
+
+			alert('你已经点过赞了!!!')
+		}
+	})
+
+
+</script>
+</html>
