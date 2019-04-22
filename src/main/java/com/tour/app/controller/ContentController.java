@@ -3,11 +3,13 @@ package com.tour.app.controller;
 import com.tour.app.model.entity.Contents;
 import com.tour.app.model.entity.ResponseInfo;
 import com.tour.app.model.entity.Users;
+import com.tour.app.model.mapper.ContentMapper;
 import com.tour.app.service.ContentService;
 import com.tour.app.untils.FileUploadUtil;
 import com.tour.app.untils.ReponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class ContentController {
@@ -26,6 +29,9 @@ public class ContentController {
 
     @Autowired
     ContentService service;
+
+    @Autowired
+    ContentMapper contentMapper;
 
     @PostMapping("/con/add")
     @ResponseBody
@@ -68,6 +74,19 @@ public class ContentController {
 
 
         return release;
+
+    }
+
+    @GetMapping("/search")
+    public String search(@PathParam("key")String key, Model model){
+
+
+        List<Contents> contents = contentMapper.selectByKey("%" + key + "%");
+
+        model.addAttribute("contents",contents);
+
+
+        return "index/search";
 
     }
 

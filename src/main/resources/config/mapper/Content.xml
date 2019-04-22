@@ -40,4 +40,8 @@
 
 
     </update>
+
+    <select id="selectByKey" resultType="com.tour.app.model.entity.Contents">
+        SELECT * FROM t_contents WHERE state =1 AND title LIKE #{key}
+    </select>
 </mapper>

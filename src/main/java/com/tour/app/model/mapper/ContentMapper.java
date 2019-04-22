@@ -18,4 +18,6 @@ public interface ContentMapper {
 
     Integer updateById(String id);
 
+    List<Contents> selectByKey(String key);
+
 }

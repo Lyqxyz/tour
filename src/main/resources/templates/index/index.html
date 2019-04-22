@@ -33,7 +33,7 @@
 	 <div class="header" th:fragment="header">
 			
 				<div class="logo wow fadeInLeft animated" data-wow-delay=".5s">
-					<h1><a href="index.html">旅行日志</a></h1>
+					<h1><a th:href="@{/home}">近在远方</a></h1>
 				</div>
 					<nav class="navbar navbar-default">
 						<div class="navbar-header">
@@ -47,7 +47,7 @@
 						<!--/.navbar-header-->
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<ul class="nav navbar-nav animated wow fadeInUp animated animated" data-wow-duration="1200ms" data-wow-delay="500ms">
-								<li class="active"><a th:href="@{/home}">主页</a></li>
+								<li><a th:href="@{/home}">主页</a></li>
 								<li><a th:href="@{/spot/all}">景点</a></li>
 								<li><a th:href="@{/con/info}">旅游日志</a></li>
 								<li><a th:href="@{/loginView}" th:if="${session.user}==null">登录</a></li>
@@ -60,8 +60,7 @@
 				 <div class="search-box">
 					 <div id="sb-search" class="sb-search">
 						 <form action="#" method="post">
-							 <input class="sb-search-input" placeholder="请输入关键字。。。" type="search" name="search" id="search">
-							 <input class="sb-search-submit" type="submit" value="">
+							 <input autocomplete="off" class="sb-search-input" placeholder="请输入关键字。。。" type="search" name="search" id="search">
 							 <span class="sb-icon-search"> </span>
 						 </form>
 					 </div>
@@ -73,6 +72,24 @@
 					 <script th:src="@{/index/js/uisearch.js}"></script>
 					 <script>
 						 new UISearch( document.getElementById( 'sb-search' ) );
+
+						 $('#search').on('keypress',(e)=>{
+
+							 //
+							 if(e.which===13){
+
+								 e.preventDefault()
+
+								 let val = $('#search').val()
+								 if(val.trim()!==''){
+
+								 	let url  = `/search?key=${val.trim()}`
+									 window.location=url;
+
+								 }
+							 }
+
+						 })
 					 </script>
 					 <!-- //search-scripts -->
 		</div>
@@ -83,21 +100,12 @@
 	  <section class="slider">
            <div class="flexslider">
              <ul class="slides">
-				   <li>
-				   <img th:src="@{/index/images/33.jpg}" class="img-responsive" alt="" width="500" height="300">
-				   <h3>At vero eos et accusamus </h3>
-					<p> ducimus qui blanditiis praesentium voluptatum atque corrupti quos dolores deleniti atque corrupti quos dolores et quas.</p>
+				   <li th:each="item:${spots}">
+					   <img th:src="@{${item.spotpic}}" class="img-responsive" alt="" width="500" height="300">
+					   <h3 ><a th:href="@{${item.spoturl}}" th:text="${item.spotname}"></a> </h3>
+					   <p th:text="${item.spotaddress}"></p>
 				   </li>
-				   <li>
-				    <img th:src="@{/index/images/44.jpg}" class="img-responsive" alt="" width="500" height="300">
-				   <h3>Accusamus et iusto odio </h3>
-					<p> ducimus qui blanditiis praesentium atque corrupti quos dolores voluptatum deleniti atque corrupti quos dolores et quas.</p>
-				   </li>
-				   <li>
-				    <img th:src="@{/index/images/55.jpg}" class="img-responsive" alt="" width="500" height="300">
-				   <h3>Et accusamus et iusto </h3>
-					<p> ducimus qui blanditiis praesentium voluptatum atque corrupti quos dolores deleniti atque corrupti quos dolores et quas.</p>
-				   </li>
+
           </ul>
         </div>
       </section>
@@ -179,9 +187,9 @@
 		<div class="content-middle wthree">
 			<div class="container">
 				<div class="mid-content wow fadeInRight animated" data-wow-delay=".5s">
-					<h3 th:text=" ${cons.list[2].title}"></h3>
-					<p th:text="${cons.list[2].slug}"></p>
-					<a class="hvr-sweep-to-right more-in" th:href="@{/detail/{id}(id=${cons.list[2].cid})}">Read More</a>
+					<h3>广告精选</h3>
+					<p>喝好酒就上酒仙网</p>
+					<a class="hvr-sweep-to-right more-in" th:href="@{https://m.jiuxian.com}">了解更多</a>
 				</div>
 			</div>
 		</div>
