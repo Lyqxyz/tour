@@ -82,7 +82,7 @@
 					</div>
 					<p th:if="${#lists.size(comments)==0}">还没有评论</p>
 				</div>
-				<div class="leave-coment-form agileits-5" id="comm">
+				<div class="leave-coment-form agileits-5" id="comm" th:if="${detail.allowComment==1}">
 					<h3>留下你的评论</h3>
 					<form action="#" method="post">
 						<input id="cid" ref="cid" type="hidden" th:value="${detail.cid}">
