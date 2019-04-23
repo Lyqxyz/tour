@@ -16,8 +16,16 @@ public interface ContentMapper {
 
     Contents selectById(Integer id);
 
-    Integer updateById(String id);
+    Integer updateById(Contents contents);
 
     List<Contents> selectByKey(String key);
+
+    List<Contents> all();
+
+    Integer updataState(Contents contents);
+
+    Integer delete(Integer cid);
+
+    List<Contents> allByUser(Integer uid);
 
 }

@@ -1,5 +1,8 @@
 package com.tour.app.controller;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.tour.app.model.entity.Contents;
 import com.tour.app.model.entity.ResponseInfo;
 import com.tour.app.model.entity.Users;
@@ -20,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class ContentController {
@@ -63,6 +67,73 @@ public class ContentController {
 
     }
 
+    @ResponseBody
+    @GetMapping(path = "/delete/{id}")
+    public Object del(@PathVariable(value = "id")Integer id){
+
+        Integer delete = contentMapper.delete(id);
+
+        ResponseInfo ok = ReponseUtil.ok();
+        ok.setMsg("删除成功");
+
+        return ok;
+
+    }
+
+    @ResponseBody
+    @PostMapping(path = "/state/{id}")
+    public Object updateState(Contents contents, @PathVariable(value = "id")Integer id){
+
+        contents.setCid(id);
+
+        Integer integer = contentMapper.updataState(contents);
+
+        ResponseInfo ok = ReponseUtil.ok();
+        ok.setMsg("更新成功");
+
+        return ok;
+
+    }
+
+    @ResponseBody
+    @PostMapping(path = "/update/{id}")
+    public Object update(Contents contents,@PathVariable(value = "id")Integer id
+            ,@PathParam("file")MultipartFile file){
+
+        contents.setCid(id);
+
+        if(Objects.isNull(file)){
+
+            contentMapper.updateById(contents);
+            ResponseInfo ok = ReponseUtil.ok();
+            ok.setMsg("更新成功");
+            return ok;
+
+        }else{
+
+            try {
+                String upload = fileUploadUtil.upload(file);
+                contents.setThumbImg(upload);
+                contentMapper.updateById(contents);
+                ResponseInfo ok = ReponseUtil.ok();
+                ok.setMsg("更新成功");
+                return ok;
+            } catch (IOException e) {
+                ResponseInfo error = ReponseUtil.error();
+                error.setMsg("文件上传失败");
+                return error;
+            }
+        }
+
+    }
+
+    @GetMapping("/con/updateView")
+    public String update(){
+
+        return "admin/contentTable";
+
+    }
+
 
     @ResponseBody
     @GetMapping(path = "/con/info/{pageSize}/{pageNum}")
@@ -74,6 +145,38 @@ public class ContentController {
 
 
         return release;
+
+    }
+
+    @ResponseBody
+    @GetMapping(path = "/con/all/{pageSize}/{pageNum}")
+    public Object all(@PathVariable(value = "pageSize")Integer pageSize,
+                       @PathVariable(value = "pageNum")Integer pageNum){
+
+
+        PageHelper.startPage(pageSize,pageNum);
+
+        List<Contents> all = contentMapper.all();
+
+        PageInfo<Contents> pageInfo= new PageInfo<>(all);
+
+        return pageInfo;
+
+    }
+
+    @ResponseBody
+    @GetMapping(path = "/con/{uid}/{pageSize}/{pageNum}")
+    public Object infoByUser(@PathVariable("uid")Integer id, @PathVariable(value = "pageSize")Integer pageSize,
+                       @PathVariable(value = "pageNum")Integer pageNum){
+
+
+       PageHelper.startPage(pageSize,pageNum);
+
+        List<Contents> contents = contentMapper.allByUser(id);
+
+        PageInfo<Contents> pageInfo= new PageInfo<>(contents);
+
+        return pageInfo;
 
     }
 
@@ -102,5 +205,12 @@ public class ContentController {
 
         return "index/tourlog";
     }
+
+    @GetMapping("/con/user")
+    public String userInfo(){
+
+        return "admin/userContent";
+    }
+
 
 }

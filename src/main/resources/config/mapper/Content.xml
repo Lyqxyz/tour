@@ -35,13 +35,50 @@
     <select id="selectById" resultType="com.tour.app.model.entity.Contents">
         SELECT * FROM t_contents WHERE state =1 AND cid=#{cid}
     </select>
-
     <update id="updateById">
 
-
+        UPDATE t_contents
+        SET title =#{title},
+        slug =#{slug},
+        type =#{type},
+        tags =#{tags},
+        content =#{content},
+        thumb_img =#{thumbImg},
+        state=#{state},
+        allow_comment=#{allowComment},
+        modified=NOW()
+        WHERE
+            cid=#{cid}
     </update>
+    <update id="updataState">
+          UPDATE t_contents
+            SET
+            state =#{state}
+            WHERE
+        cid=#{cid}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM t_contents  WHERE
+        cid=#{cid}
+
+    </delete>
 
     <select id="selectByKey" resultType="com.tour.app.model.entity.Contents">
         SELECT * FROM t_contents WHERE state =1 AND title LIKE #{key}
+    </select>
+
+    <select id="all" resultType="com.tour.app.model.entity.Contents">
+        SELECT * FROM t_contents
+    </select>
+
+    <select id="allByUser" resultType="com.tour.app.model.entity.Contents">
+        SELECT
+            c.*
+        FROM
+            t_contents c
+        WHERE
+            c.author_id=#{uid}
+
     </select>
 </mapper>

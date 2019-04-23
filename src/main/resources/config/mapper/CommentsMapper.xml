@@ -18,6 +18,14 @@
     </select>
 
     <update id="updateById">
-        UPDATE t_comments SET state=1 WHERE coid=#{coid}
+        UPDATE t_comments SET state=#{state} WHERE coid=#{coid}
+    </update>
+
+    <select id="all" resultType="com.tour.app.model.entity.Comments">
+        SELECT * FROM t_comments
+    </select>
+
+    <update id="updateComments">
+        UPDATE t_comments SET author=#{author},mail=#{mail},content=#{content} WHERE coid=#{coid}
     </update>
 </mapper>
