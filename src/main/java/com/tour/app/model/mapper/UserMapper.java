@@ -15,4 +15,13 @@ public interface UserMapper {
      Integer reg(Users users);
 
      Users check(String usename);
+
+     Integer updatePwd(Users users);
+
+     Integer updatePic(Users users);
+
+     Integer toAdmin(Integer uid);
+
+     Integer del(Integer id);
+
 }

@@ -395,7 +395,7 @@
           },
           page(item){
 
-            let url = `/con/all/${this.info.nextPage}/${this.info.pageSize}`
+            let url = `/con/all/${item}/${this.info.pageSize}`
             axios.get(url).then(res=>{
               this.info = res.data
             })

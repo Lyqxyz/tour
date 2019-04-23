@@ -52,7 +52,7 @@ public class Users  {
     /**
      * 上次登录最后活跃时间
      */
-    private Integer logged;
+    private String logged;
 
     /**
      * 用户组

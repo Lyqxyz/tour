@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bootstrap Material Admin by Bootstrapious.com</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" th:href="@{/vendor/font-awesome/css/font-awesome.min.css}">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" th:href="@{/css/fontastic.css}">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" th:href="@{/css/style.default.css}" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <!-- Favicon-->
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap4.min.css}">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+  </head>
+  <body>
+    <div class="page">
+      <!-- Main Navbar-->
+      <div th:replace="comm/common::commonHeader"></div>
+      <div class="page-content d-flex align-items-stretch"> 
+        <!-- Side Navbar -->
+        <div th:replace="comm/common::commonNavBar"></div>
+        <div class="content-inner">
+          <!-- Breadcrumb-->
+          <div class="breadcrumb-holder container-fluid">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a th:href="@{/home}">主页</a></li>
+              <li class="breadcrumb-item active">信息更改</li>
+            </ul>
+          </div>
+          <!-- Forms Section-->
+          <section class="forms" id="user">
+            <div class="container-fluid">
+              <div class="row">
+
+                <div class="col-lg-5">
+                  <div class="card">
+                    <div class="card-close">
+                      <div class="dropdown">
+                        <button type="button" id="closeCard1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                        <div aria-labelledby="closeCard1" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+                      </div>
+                    </div>
+                    <div class="card-header d-flex align-items-center">
+                      <h3 class="h4">更改密码</h3>
+                    </div>
+                    <div class="card-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="newpwd" class="form-control-label">新的密码</label>
+                          <input v-model="pwd" id="newpwd" type="password" placeholder="请输入密码" class="form-control">
+                        </div>
+                        <div class="form-group">
+                          <label for="repwd" class="form-control-label">确认密码</label>
+                          <input v-model="repwd" id="repwd" type="password" placeholder="再次输入密码" class="form-control">
+                        </div>
+                        <div class="form-group">
+                          <input @click="save" type="submit" value="更改" class="btn btn-primary">
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-5">
+                  <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                      <h3 class="h4">上传头像</h3>
+                    </div>
+                    <div class="card-body">
+                      <img :src="src" alt="用户头像" width="50" height="50">
+                      <form class="form-horizontal">
+                        <div class="form-group row">
+                          <label for="pic" class="col-sm-3 form-control-label">选择</label>
+                          <div class="col-sm-9">
+                            <input @change="fileChange" id="pic" type="file" class="form-control form-control-success"><small class="form-text"></small>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+          <!-- Page Footer-->
+          <footer class="main-footer">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-6">
+                  <p>Your company &copy; 2017-2019</p>
+                </div>
+                <div class="col-sm-6 text-right">
+                  <p>Design by Bootstrapious.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+                  <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <!-- JavaScript files-->
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/popper.js/umd/popper.min.js}"> </script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/vendor/jquery.cookie/jquery.cookie.js}"> </script>
+    <script th:src="@{/js/front.js}"></script>
+    <script th:src="@{/js/vue.min.js}"></script>
+    <script th:src="@{/js/axios.min.js}"></script>
+
+    <script>
+      let vm = new Vue({
+        el:'#user',
+
+        created(){
+
+          let user = JSON.parse(sessionStorage.getItem('user'))
+
+          this.src = user.logged;
+
+        },
+        data:{
+
+          pwd:'',
+          repwd:'',
+          file:'',
+          src:''
+
+        },
+        methods:{
+
+          save(e) {
+            e.preventDefault()
+            let user = JSON.parse(sessionStorage.getItem('user'))
+            if(this.pwd===''){
+              alert('请输入密码')
+              return;
+            }
+            if(this.repwd===''){
+              alert('请输入确认密码')
+              return;
+            }
+            if(this.pwd!==this.repwd){
+              alert('两次密码不一致')
+              return;
+            }
+
+            axios.post('/user/pwd/'+user.uid,`pwd=${this.pwd}`).then(res=>{
+              let {code,msg}= res.data
+
+              if(code==='-1'){
+                alert(msg)
+              }else{
+                alert(msg)
+                this.pwd=''
+                this.repwd=''
+              }
+            }).catch(err=>{
+
+              console.log(err)
+            })
+
+
+          },
+          fileChange(e){
+            let user = JSON.parse(sessionStorage.getItem('user'))
+            if(e.target.files.length<=0){
+
+              alert('请选择一张头像')
+            }else{
+              let file = e.target.files[0]
+              let fd= new FormData()
+
+              fd.append('file',file)
+              axios.post(`/user/pic/${user.uid}`,fd,{
+
+                  headers:{
+                    'Content-Type':'multipart/form-data'
+                  }
+              }).then(res=>{
+
+                let {info,msg} =res.data
+
+                alert(msg)
+
+                this.src=info.path;
+
+              }).catch(err=>{
+
+                console.log(err)
+              })
+
+            }
+
+
+
+
+          }
+
+
+        }
+
+
+      })
+
+    </script>
+  </body>
+</html>

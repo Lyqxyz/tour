@@ -6,6 +6,7 @@ import com.tour.app.model.entity.Comments;
 import com.tour.app.model.entity.Contents;
 import com.tour.app.model.entity.ResponseInfo;
 import com.tour.app.model.mapper.CommentsMapper;
+import com.tour.app.model.mapper.ContentMapper;
 import com.tour.app.service.CommentsService;
 import com.tour.app.untils.ReponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,22 @@ public class CommentsController {
     }
 
     @ResponseBody
+    @GetMapping("/comm/{uid}/{pageSize}/{pageNum}")
+    public Object allByUser(@PathVariable("uid")Integer uid, @PathVariable(value = "pageSize")Integer pageSize,
+                      @PathVariable(value = "pageNum")Integer pageNum){
+
+
+        PageHelper.startPage(pageSize,pageNum);
+
+        List<Comments> all = commentsMapper.allByUser(uid);
+
+        PageInfo<Comments> pageInfo= new PageInfo<>(all);
+
+        return pageInfo;
+
+    }
+
+    @ResponseBody
     @PostMapping(path = "/commstate/{id}")
     public Object updateState(Comments comments, @PathVariable(value = "id")Integer id){
 
@@ -83,6 +100,19 @@ public class CommentsController {
         return ok;
 
     }
+    @ResponseBody
+    @GetMapping(path = "/commstate/del/{id}")
+    public Object del( @PathVariable(value = "id")Integer id){
+
+        Integer del = commentsMapper.del(id);
+
+        ResponseInfo ok = ReponseUtil.ok();
+
+        ok.setMsg("删除成功");
+
+        return ok;
+
+    }
 
     @GetMapping("/comm/admin")
     public String allInfo(){
@@ -91,5 +121,11 @@ public class CommentsController {
         return "admin/commentsTable";
     }
 
+    @GetMapping("/comm/user")
+    public String allByU(){
+
+
+        return "admin/UserCommentsTable";
+    }
 
 }

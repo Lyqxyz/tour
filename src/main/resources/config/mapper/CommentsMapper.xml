@@ -26,6 +26,13 @@
     </select>
 
     <update id="updateComments">
-        UPDATE t_comments SET author=#{author},mail=#{mail},content=#{content} WHERE coid=#{coid}
+        UPDATE t_comments SET author=#{author},mail=#{mail},content=#{content},state=#{state} WHERE coid=#{coid}
     </update>
+    <delete id="del">
+
+        DELETE FROM t_comments WHERE coid=#{coid}
+    </delete>
+    <select id="allByUser" resultType="com.tour.app.model.entity.Comments">
+         SELECT * FROM t_comments WHERE author_id=#{uid}
+    </select>
 </mapper>

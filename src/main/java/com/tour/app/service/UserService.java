@@ -34,6 +34,19 @@ public class UserService {
         return ok;
     }
 
+    public ResponseInfo updatePwd(Users users){
+
+
+        Integer integer = userMapper.updatePwd(users);
+
+        ResponseInfo ok = ReponseUtil.ok();
+        ok.setMsg("密码修改成功");
+
+
+        return ok;
+    }
+
+
     public ResponseInfo reg(Users users){
 
         Users check = userMapper.check(users.getUsername());

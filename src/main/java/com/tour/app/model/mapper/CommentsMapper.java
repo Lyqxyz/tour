@@ -18,4 +18,8 @@ public interface CommentsMapper {
 
     Integer updateComments(Comments comments);
 
+    Integer del(Integer coid);
+
+    List<Comments> allByUser(Integer uid);
+
 }

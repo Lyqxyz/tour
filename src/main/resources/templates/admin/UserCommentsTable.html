@@ -37,8 +37,8 @@
           <!-- Breadcrumb-->
           <div class="breadcrumb-holder container-fluid">
             <ul class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-              <li class="breadcrumb-item active">Tables</li>
+              <li class="breadcrumb-item"><a th:href="@{/home}">主页</a></li>
+              <li class="breadcrumb-item active">我的评论</li>
             </ul>
           </div>
           <section class="tables" id="comm">
@@ -46,9 +46,6 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">Striped table with hover effect</h3>
-                    </div>
                     <div class="card-body">
                       <div class="table-responsive">                       
                         <table class="table table-striped table-hover">
@@ -70,8 +67,8 @@
                               <td>
                                 <button @click="show(item)" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg">编辑</button>
                                 <button @click="del(item,index)" class="btn btn-danger">删除</button>
-                                <button @click="updateState(item,-1)" class="btn btn-warning">审核不通过</button>
-                                <button @click="updateState(item,1)" class="btn btn-info">审核通过</button>
+<!--                                <button @click="updateState(item,-1)" class="btn btn-warning">审核不通过</button>-->
+<!--                                <button @click="updateState(item,1)" class="btn btn-info">审核通过</button>-->
                               </td>
                             </tr>
                           </tbody>
@@ -81,7 +78,7 @@
                     <div class="card-footer">
                       <nav class="page">
                         <ul class="pagination">
-                          <li @click="page(item)" class="page-link" v-for="item in info.navigatepageNums">{{item}}</li>
+                          <li @click="page(index)" class="page-link" v-for="item in info.navigatepageNums">{{item}}</li>
                         </ul>
                       </nav>
                     </div>
@@ -94,7 +91,7 @@
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">详情</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -154,7 +151,12 @@
         el:'#comm',
         created(){
 
-          axios.get('/comm/info/1/3').then(res=>{
+          let user = JSON.parse(sessionStorage.getItem('user'))
+          if(user===null){
+
+            location='/loginView'
+          }
+          axios.get('/comm/'+user.uid+'/1/3').then(res=>{
             this.info=res.data
           })
 
@@ -185,7 +187,8 @@
           },
           redo(){
 
-            let url = `/comm/info/${this.info.pageNum}/${this.info.pageSize}`
+            let user = JSON.parse(sessionStorage.getItem('user'))
+            let url = `/comm/${user.uid}/${this.info.pageNum}/${this.info.pageSize}`
             axios.get(url).then(res=>{
               this.info = res.data
             })
@@ -214,7 +217,7 @@
               return;
             }
             let data =`author=${this.detail.author}
-							&mail=${this.detail.mail}&content=${this.detail.content}&state=${this.detail.state}`;
+							&mail=${this.detail.mail}&content=${this.detail.content}&state=0`;
             axios.post('/comm/update/'+this.detail.coid,data).then(res=>{
 
               let {code,msg} =res.data;
@@ -231,28 +234,29 @@
             })
 
           },
-          page(item){
-            let url = `/comm/info/${item}/${this.info.pageSize}`
+          page(){
+            let user = JSON.parse(sessionStorage.getItem('user'))
+            let url = `/comm/${user.uid}/${this.info.nextPage}/${this.info.pageSize}`
             axios.get(url).then(res=>{
               this.info = res.data
             })
           },
-          updateState(item,state){
-
-            axios.post(`/commstate/${item.coid}`,`state=${state}`).then(res=>{
-
-              let {code,msg} = res.data
-              if(code==='-1'){
-                alert(msg)
-              }else{
-                alert(msg)
-                item.state=state
-              }
-            }).catch(err=>{
-
-              console.log(err)
-            })
-          },
+          // updateState(item,state){
+          //
+          //   axios.post(`/commstate/${item.coid}`,`state=${state}`).then(res=>{
+          //
+          //     let {code,msg} = res.data
+          //     if(code==='-1'){
+          //       alert(msg)
+          //     }else{
+          //       alert(msg)
+          //       item.state=state
+          //     }
+          //   }).catch(err=>{
+          //
+          //     console.log(err)
+          //   })
+          // },
           del(item,index){
             axios.get('/commstate/del/'+item.coid).then(res=>{
 

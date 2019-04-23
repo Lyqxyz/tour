@@ -15,9 +15,24 @@
 
     <insert id="reg">
 
-        INSERT INTO t_users(uid,username,pwd) VALUES(NULL,#{username},#{pwd})
+        INSERT INTO t_users(uid,username,pwd,state,created) VALUES(NULL,#{username},#{pwd},0,NOW())
     </insert>
     <select id="check" resultType="com.tour.app.model.entity.Users">
          SELECT * FROM t_users WHERE username=#{username}
     </select>
+    <update id="updatePwd">
+        UPDATE t_users SET pwd =#{pwd} WHERE uid=#{uid}
+    </update>
+
+    <update id="updatePic">
+         UPDATE t_users SET logged =#{logged} WHERE uid=#{uid}
+    </update>
+
+    <update id="toAdmin">
+        UPDATE t_users SET state =1 WHERE uid=#{uid}
+    </update>
+    <delete id="del">
+        DELETE FROM t_users WHERE uid=#{uid}
+
+    </delete>
 </mapper>
