@@ -19,4 +19,21 @@
     <select id="all" resultType="com.tour.app.model.entity.Spot">
             SELECT * FROM t_spot
     </select>
+    <update id="updateById">
+        UPDATE t_spot
+        SET spotname =#{spotname},
+        spotphone =#{spotphone},
+        spotaddress =#{spotaddress},
+        spoturl =#{spoturl},
+        spotpic = #{spotpic}
+        WHERE
+            id=#{id}
+    </update>
+
+    <delete id="del">
+
+        DELETE FROM t_spot WHERE id=#{id}
+
+    </delete>
+
 </mapper>

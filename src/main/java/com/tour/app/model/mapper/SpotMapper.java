@@ -13,4 +13,8 @@ public interface SpotMapper {
     Spot check(String name);
 
     List<Spot> all();
+
+    Integer updateById(Spot spot);
+
+    Integer del(Integer id);
 }

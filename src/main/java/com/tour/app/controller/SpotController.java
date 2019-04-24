@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.websocket.server.PathParam;
 import java.io.IOException;
+import java.util.Objects;
 
 @Controller
 @RequestMapping(value = "/spot")
@@ -65,6 +66,64 @@ public class SpotController {
     }
 
 
+    @ResponseBody
+    @GetMapping("/del/{id}")
+    public Object del(@PathVariable("id")Integer id){
+
+
+        Integer del = spotMapper.del(id);
+
+        ResponseInfo ok = ReponseUtil.ok();
+
+        ok.setMsg("删除成功");
+
+
+        return ok;
+    }
+
+    @ResponseBody
+    @PostMapping("/update")
+    public Object update(Spot spot,@PathParam("file")MultipartFile file){
+
+        if(Objects.isNull(file)){
+
+
+            Integer integer = spotMapper.updateById(spot);
+
+            ResponseInfo ok = ReponseUtil.ok();
+
+            ok.setMsg("更新成功");
+
+            return ok;
+
+        }else{
+            String upload = null;
+            try {
+                upload = fileUploadUtil.upload(file);
+
+                spot.setSpotpic(upload);
+
+                Integer integer = spotMapper.updateById(spot);
+
+                ResponseInfo ok = ReponseUtil.ok();
+
+                ok.setMsg("更新成功");
+
+                return ok;
+
+            } catch (IOException e) {
+
+                ResponseInfo error = ReponseUtil.error();
+
+                error.setMsg("上传失败");
+
+                return error;
+            }
+
+        }
+
+    }
+
 
     @GetMapping("/addView")
     public String addView(){
@@ -73,6 +132,12 @@ public class SpotController {
         return "admin/addSpot";
     }
 
+    @GetMapping("/edit")
+    public String edit(){
+
+
+        return "admin/SpotsTables";
+    }
 
     @GetMapping("/all")
     public String info(){
