@@ -24,4 +24,8 @@ public interface UserMapper {
 
      Integer del(Integer id);
 
+     Users checkEmail(String email);
+
+     Users checkPhone(String phone);
+
 }

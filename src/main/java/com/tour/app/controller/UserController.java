@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class UserController {
@@ -142,6 +143,50 @@ public class UserController {
         ok.setMsg("删除成功");
 
         return ok;
+
+    }
+
+    @ResponseBody
+    @GetMapping("/user/phone/{phone}")
+    public Object check(@PathVariable(value = "phone")String phone){
+
+
+        Users users = userMapper.checkPhone(phone);
+
+        if(Objects.isNull(users)){
+
+
+            ResponseInfo ok = ReponseUtil.ok();
+            return ok;
+        }else{
+
+            ResponseInfo error = ReponseUtil.error();
+            error.setMsg("电话已经存在");
+
+            return error;
+        }
+
+
+    }
+
+    @ResponseBody
+    @GetMapping("/user/email/{email}")
+    public Object checkmail(@PathVariable(value = "email")String email){
+
+        Users users = userMapper.checkEmail(email);
+
+        if(Objects.isNull(users)){
+
+            ResponseInfo ok = ReponseUtil.ok();
+            return ok;
+        }else{
+
+            ResponseInfo error = ReponseUtil.error();
+            error.setMsg("邮箱已经存在");
+
+            return error;
+        }
+
 
     }
 

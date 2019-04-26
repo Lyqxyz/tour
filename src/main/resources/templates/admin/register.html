@@ -51,18 +51,28 @@
                       <label for="register-username" class="label-material"></label>
                     </div>
                     <div class="form-group">
-                      <input placeholder="请输入密码" v-model="pwd" id="register-email" type="password" name="registerEmail" required data-msg="Please enter a valid email address" class="input-material">
+                      <input placeholder="请输入密码" v-model="pwd" id="register-pwd" type="password" name="registerEmail" required data-msg="Please enter a valid email address" class="input-material">
                       <label for="register-email" class="label-material"></label>
                     </div>
                     <div class="form-group">
                       <input placeholder="请输入确认密码" v-model="pwd1" id="register-password" type="password" name="registerPassword" required data-msg="Please enter your password" class="input-material">
                       <label for="register-password" class="label-material"></label>
                     </div>
-<!--                    <div class="form-group terms-conditions">-->
-<!--                      <input id="register-agree" name="registerAgree" type="checkbox" required value="1" data-msg="Your agreement is required" class="checkbox-template">-->
-<!--                      <label for="register-agree">Agree the terms and policy</label>-->
-<!--                    </div>-->
                     <div class="form-group">
+                      <input placeholder="请输入电话" v-model="phone" id="register-phone" type="text" name="registerUsername" required data-msg="Please enter your username" class="input-material">
+                      <label for="register-username" class="label-material"></label>
+                    </div>
+                    <div class="form-group">
+                      <input placeholder="请输入邮箱" v-model="email" id="register-email" type="email" name="registerEmail" required data-msg="Please enter a valid email address" class="input-material">
+                      <label for="register-email" class="label-material"></label>
+                    </div>
+
+                    <div class="form-group">
+                      <input placeholder="请输入确认验证码" v-model="code" id="registercode" type="password" name="registerPassword" required data-msg="Please enter your password" class="input-material">
+                      <label for="register-password" class="label-material"></label>
+                    </div>
+                    <div class="form-group">
+                      <button ref="btn" @click="checkEmail" id="send" type="submit" name="registerSubmit" class="btn btn-primary">{{emailText}}</button>
                       <button @click="sub" id="regidter" type="submit" name="registerSubmit" class="btn btn-primary">注册</button>
                     </div>
                   </form><small>已有用户? </small><a th:href="@{/loginView}" class="signup">登录</a><a th:href="@{/home}" class="signup">首页</a>
@@ -93,18 +103,30 @@
 
       let vm = new Vue({
         el:'#reg',
+
+        mounted(){
+
+          this.btn  = this.$refs.btn
+
+          // this.btn.setAttribute('disabled','disabled')
+
+        },
         data:{
           username:'',
           pwd:'',
-          pwd1:''
+          pwd1:'',
+          phone:'',
+          email:'',
+          code:'',
+          emailText:'发送验证码至邮箱',
+          okemail:0,
+          okphone:0,
+          btn :null,
 
         },
         methods:{
           sub(e){
-
             e.preventDefault();
-
-
             if(this.username===''){
 
               alert('请输入用户名')
@@ -120,14 +142,16 @@
               alert('请输入确认密码')
               return;
             }
-
             if(this.pwd1!==this.pwd){
 
               alert('两次密码不一样')
               return;
             }
-
-
+            this.checkPhone();
+            if(this.code===''){
+              alert('请输入验证码')
+              return;
+            }
             let postData=`username=${this.username}&pwd=${this.pwd}`
 
             axios.post('/reg',postData).then(res=>{
@@ -138,23 +162,74 @@
 
                 alert(msg)
               }else{
-
                 alert(msg)
                   window.location="/loginView"
               }
-
-
             }).catch(err=>{
 
               console.log(err)
               alert('服务器错误')
-
             })
 
+          },
+          send(e){
+            this.btn.setAttribute('disabled','disabled')
+            let i = 10;
+            this.id = setInterval(()=>{
+              this.emailText=i+'后才能发送'
+              i--
+              if(i<0){
+                clearInterval(this.id)
+                this.emailText='发送验证码至邮箱'
+                this.btn.removeAttribute('disabled')
+              }
+            },1000)
+          },
+          checkPhone(){
+            let  isPhone = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/
+            if(isPhone.test(this.phone)){
+              let url =  `/user/phone/${this.phone}`
+              axios.get(url).then(res=>{
+                let { code ,msg}=res.data
+                if(code==='-1'){
+                  alert(msg)
+                  this.okphone=0
+                  return;
+                }else{
+                  this.okphone=1
+                }
+              }).catch(err=>{
+                console.log(err)
+              })
+            }else {
+              alert('电话格式不正确')
+              this.okphone=0
+              return;
+            }
+          },
+          checkEmail(){
+            let email =/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+            if(email.test(this.email)){
+              let url =  `/user/email/${this.email}`
+              axios.get(url).then(res=>{
+                let { code ,msg}=res.data
+                if(code==='-1'){
+                  alert(msg)
+                  this.okemail=0
+                }else{
+                  this.okemail=1
+
+                  this.send()
+                }
+              }).catch(err=>{
+                console.log(err)
+              })
+            }else{
+              alert('邮箱格式不正确')
+              this.okemail=0
+            }
           }
-
         }
-
       })
 
     </script>
