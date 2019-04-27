@@ -47,12 +47,6 @@
 
                 <div class="col-lg-5">
                   <div class="card">
-                    <div class="card-close">
-                      <div class="dropdown">
-                        <button type="button" id="closeCard1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
-                        <div aria-labelledby="closeCard1" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
-                      </div>
-                    </div>
                     <div class="card-header d-flex align-items-center">
                       <h3 class="h4">更改密码</h3>
                     </div>
@@ -93,6 +87,46 @@
                   </div>
                 </div>
 
+                <div class="col-lg-5">
+                  <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                      <h3 class="h4">个人详细信息</h3>
+                    </div>
+                    <div class="card-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="name" class="form-control-label">昵称</label>
+                          <input v-model="username" id="name" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                          <label for="birthday" class="form-control-label">生日{{age}}</label>
+                          <input v-model="age" id="birthday" type="date" class="form-control">
+                        </div>
+                        <div class="form-group ">
+                          <label class="col-sm-3 form-control-label">性别<br><small class="text-primary"></small></label>
+                          <div class="col-sm-9">
+                            <div>
+                              <input v-model="gender"  id="weman" type="radio" value="0" name="optionsRadios">
+                              <label for="weman">女</label>
+                            </div>
+                            <div>
+                              <input v-model="gender" id="man" type="radio" value="1" name="optionsRadios">
+                              <label for="man">男</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="owner" class="form-control-label">个人简介</label>
+                          <textarea v-model="owner" id="owner" type="password" placeholder="输入个人简介" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                          <input @click="updateInfo" type="submit" value="更改" class="btn btn-primary">
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </section>
@@ -127,18 +161,32 @@
         el:'#user',
 
         created(){
-
           let user = JSON.parse(sessionStorage.getItem('user'))
-
           this.src = user.logged;
+          let {age,gender,owner,username,uid} = user
+
+          this.age= age
+
+          this.gender = gender
+
+          this.owner=owner
+
+          this.username=username
+
+          this.uid=uid;
 
         },
         data:{
-
           pwd:'',
           repwd:'',
           file:'',
-          src:''
+          src:'',
+          age:'',
+          gender:'',
+          owner:'',
+          username:'',
+          uid:''
+
 
         },
         methods:{
@@ -205,6 +253,23 @@
               })
 
             }
+
+
+
+
+          },
+          updateInfo(e){
+
+            e.preventDefault()
+            let data = `username=${this.username}&owner=${this.owner}
+            &age=${this.age}&gender=${this.gender}&uid=${this.uid}`
+            axios.post('/updateInfo',data).then(res=>{
+              let {code,msg} = res.data
+              alert(msg)
+            }).catch(err=>{
+
+              console.log(err)
+            })
 
 
 

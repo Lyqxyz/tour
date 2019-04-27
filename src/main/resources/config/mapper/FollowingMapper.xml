@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tour.app.model.mapper.FollowingMapper">
+    <insert id="add" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO t_following ( id, uid, fanid, state, created )
+        VALUES
+	    (NULL,#{uid},#{fanid},1,NOW() )
+    </insert>
+
+    <select id="find" resultType="com.tour.app.model.entity.Following">
+        SELECT
+            *
+        FROM
+            t_following
+        WHERE
+            uid =#{uid}
+
+	    AND fanid=#{fanid}
+    </select>
+
+    <select id="findMyFollewing" resultType="com.tour.app.model.entity.Following">
+        SELECT * FROM t_following WHERE uid=#{uid}
+    </select>
+
+    <select id="findMyFans" resultType="com.tour.app.model.entity.Following">
+        SELECT * FROM t_following WHERE fanid=#{fanid}
+    </select>
+</mapper>

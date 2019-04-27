@@ -79,6 +79,18 @@
             t_contents c
         WHERE
             c.author_id=#{uid}
+            ORDER BY created DESC
+	        LIMIT 9
+    </select>
+    <select id="allByUserHits" resultType="com.tour.app.model.entity.Contents">
 
+            SELECT
+                c.*
+            FROM
+                t_contents c
+            WHERE
+                c.author_id=#{uid}
+            ORDER BY hits DESC
+            LIMIT 5
     </select>
 </mapper>

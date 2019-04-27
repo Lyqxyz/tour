@@ -28,4 +28,8 @@ public interface UserMapper {
 
      Users checkPhone(String phone);
 
+     Users info(Integer id);
+
+     Integer updateInfo(Users users);
+
 }

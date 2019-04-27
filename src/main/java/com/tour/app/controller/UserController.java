@@ -5,14 +5,17 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sun.net.httpserver.HttpsConfigurator;
 import com.tour.app.model.entity.Comments;
+import com.tour.app.model.entity.Contents;
 import com.tour.app.model.entity.ResponseInfo;
 import com.tour.app.model.entity.Users;
+import com.tour.app.model.mapper.ContentMapper;
 import com.tour.app.model.mapper.UserMapper;
 import com.tour.app.service.UserService;
 import com.tour.app.untils.FileUploadUtil;
 import com.tour.app.untils.ReponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +40,9 @@ public class UserController {
     @Autowired
     UserMapper userMapper;
 
+    @Autowired
+    ContentMapper contentMapper;
+
     @PostMapping("/login")
     @ResponseBody
     public Object login(Users users, HttpSession session){
@@ -51,10 +57,8 @@ public class UserController {
     public Object reg(Users users){
 
         ResponseInfo reg = userService.reg(users);
-
         return reg;
     }
-
     @ResponseBody
     @PostMapping("/user/pwd/{id}")
     public Object updatePwd(Users users ,@PathVariable("id")Integer uid){
@@ -168,6 +172,39 @@ public class UserController {
 
 
     }
+
+
+    @GetMapping("/person/{id}")
+    public String getPerson(@PathVariable("id")Integer id, Model model){
+
+        Users info = userMapper.info(id);
+
+        List<Contents> contents = contentMapper.allByUser(id);
+
+        List<Contents> contents1 = contentMapper.allByUserHits(id);
+
+        model.addAttribute("contents",contents);
+
+        model.addAttribute("contents1",contents1);
+
+        model.addAttribute("user",info);
+
+        return "person/index";
+    }
+
+    @ResponseBody
+    @PostMapping("/updateInfo")
+    public Object updateInfo(Users users){
+
+        Integer integer = userMapper.updateInfo(users);
+
+        ResponseInfo ok = ReponseUtil.ok();
+
+        ok.setMsg("修改成功");
+
+        return ok;
+    }
+
 
     @ResponseBody
     @GetMapping("/user/email/{email}")

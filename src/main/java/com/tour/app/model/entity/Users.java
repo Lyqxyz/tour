@@ -37,7 +37,7 @@ public class Users  {
 
     private Integer gender;
 
-    private Integer age;
+    private String age;
 
     private String owner;
 

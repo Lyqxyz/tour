@@ -42,4 +42,12 @@
     <select id="checkPhone" resultType="com.tour.app.model.entity.Users">
         SELECT * FROM t_users WHERE phone=#{phone}
     </select>
+
+    <select id="info" resultType="com.tour.app.model.entity.Users">
+        SELECT * FROM t_users WHERE uid=#{uid}
+    </select>
+
+    <update id="updateInfo">
+        UPDATE t_users SET age=#{age},owner=#{owner},gender=#{gender},username=#{username},activated=NOW() WHERE uid=#{uid}
+    </update>
 </mapper>
