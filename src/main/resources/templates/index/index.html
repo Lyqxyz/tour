@@ -50,6 +50,7 @@
 								<li><a th:href="@{/home}">主页</a></li>
 								<li><a th:href="@{/spot/all}">景点</a></li>
 								<li><a th:href="@{/con/info}">旅游日志</a></li>
+								<li><a th:href="@{/like}">猜你喜欢</a></li>
 								<li><a th:href="@{/loginView}" th:if="${session.user}==null">登录</a></li>
 								<li><a th:href="@{/con/addView}" th:if="${session.user}!=null">个人中心</a></li>
 								<li><a th:href="@{/logout}" th:if="${session.user}!=null">注销</a></li>

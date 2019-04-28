@@ -32,5 +32,7 @@ public interface ContentMapper {
 
     List<Contents> allById(Integer id);
 
+    List<Contents> rank();
+
 
 }

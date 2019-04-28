@@ -161,10 +161,23 @@
         el:'#user',
 
         created(){
+
+
+
           let user = JSON.parse(sessionStorage.getItem('user'))
-          this.src = user.logged;
+
+
+          axios.get(`/user/${user.uid}`).then(res=>{
+
+            user = res.data;
+
+            sessionStorage.setItem('user',JSON.stringify(user))
+
+          })
+
           let {age,gender,owner,username,uid} = user
 
+          this.src = user.logged;
           this.age= age
 
           this.gender = gender

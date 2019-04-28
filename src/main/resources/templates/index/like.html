@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>猜你喜欢</title>
+	<link th:href="@{/index/css/bootstrap.css}" rel="stylesheet" type="text/css" media="all">
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script th:src="@{/index/js/jquery-1.11.0.min.js}"></script>
+	<script type="text/javascript" th:src="@{/index/js/bootstrap.js}"></script>
+	<!-- Custom Theme files -->
+	<link th:href="@{/index/css/style.css}" rel="stylesheet" type="text/css" media="all"/>
+	<link rel="stylesheet" th:href="@{/index/css/flexslider.css}" type="text/css" media="screen" />
+	<!-- Custom Theme files -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }>
+	</script>
+	<meta name="keywords" content="" />
+	<!--Google Fonts-->
+	<link th:href="@{/index/css/font-awesome.min.css}" rel="stylesheet" type="text/css" media="all" />
+	<!---<link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>-->
+	<!-- start-smoth-scrolling -->
+	<script type="text/javascript" th:src="@{/index/js/move-top.js}"></script>
+	<script type="text/javascript" th:src="@{/index/js/easing.js}"></script>
+
+	<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+				});
+			});
+	</script>
+<!-- //end-smoth-scrolling -->
+</head>
+<body>
+<!--banner start here-->
+<div class="banner-1">
+	  <div class="container">
+  <!--header start here-->
+		  <div th:replace="index/index::header"></div>
+<!--header end here-->
+
+</div>
+</div>
+<!--banner end here-->
+<!--about-->
+<div class="about w3l-2">
+	<div class="container">
+	<h3>猜你喜欢</h3>
+		<div class="abt-top w3ls-2">
+			<div class="col-md-8 abt-left">
+			<h3 th:text="${contents[0].title}">Wine House</h3>
+			<div class="about-left">
+				<a th:href="@{/detail/{id}(id=${contents[0].cid})}">
+					<img th:src="${contents[0].thumbImg}" class="img-responsive" alt="" width="365" height="241">
+				</a>
+			</div>
+			<div class="about-right">
+				<h4 th:text="${contents[0].slug}"></h4>
+				<p th:text="${#strings.substring(contents[0].content,0,100)+'......'}"></p>
+			</div>
+			<div class="clearfix"></div>
+			</div>
+			<div class="col-md-4 abt-left">
+			<h3>点赞排行</h3>
+				<ul>
+					<li th:each="item :${contents}"><a th:href="@{/detail/{id}(id=${item.cid})}" th:text="${item.title}"></a></li>
+				</ul>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="about-btm wthree-2">
+			<h3>最受欢迎</h3>
+			<div class="col-md-6 ab-lf" th:each="item:${users}">
+				<div class="bt-lft">
+					<h5><img th:src="${item.logged}" alt="" width="62" height="54"> </h5>
+				</div>
+				<div class="bt-rgt">
+					<h4><a th:href="@{/person/{id}(id=${item.uid})}" th:text="${item.username}"></a></h4>
+					<p th:text="${item.owner}" style="width: 200px;word-break: break-all"></p>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+<!--about-->
+<!--footer-->
+<div th:replace="index/index::footer"></div>
+<!--footer-->
+</body>
+</html>

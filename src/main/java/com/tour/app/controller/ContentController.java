@@ -7,6 +7,7 @@ import com.tour.app.model.entity.Contents;
 import com.tour.app.model.entity.ResponseInfo;
 import com.tour.app.model.entity.Users;
 import com.tour.app.model.mapper.ContentMapper;
+import com.tour.app.model.mapper.UserMapper;
 import com.tour.app.service.ContentService;
 import com.tour.app.untils.FileUploadUtil;
 import com.tour.app.untils.ReponseUtil;
@@ -36,6 +37,9 @@ public class ContentController {
 
     @Autowired
     ContentMapper contentMapper;
+
+    @Autowired
+    UserMapper userMapper;
 
     @PostMapping("/con/add")
     @ResponseBody
@@ -213,5 +217,18 @@ public class ContentController {
         return "admin/userContent";
     }
 
+
+    @GetMapping("/like")
+    public String like(Model model){
+
+        List<Contents> rank = contentMapper.rank();
+        List<Users> rank1 = userMapper.rank();
+
+        model.addAttribute("contents",rank);
+
+        model.addAttribute("users",rank1);
+
+        return "index/like";
+    }
 
 }

@@ -95,7 +95,6 @@
     </select>
 
     <select id="allById" resultType="com.tour.app.model.entity.Contents">
-
             SELECT
                 c.*
             FROM
@@ -104,5 +103,14 @@
                 c.author_id=#{uid}
                 AND state=1
             ORDER BY hits DESC
+    </select>
+
+    <select id="rank" resultType="com.tour.app.model.entity.Contents">
+        SELECT
+            c.*
+        FROM
+            t_contents c
+             ORDER BY hits DESC
+        LIMIT 5
     </select>
 </mapper>

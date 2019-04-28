@@ -10,7 +10,7 @@
     </select>
 
     <select id="login" resultType="com.tour.app.model.entity.Users">
-        SELECT * FROM t_users WHERE username=#{username} AND pwd=#{pwd}
+        SELECT * FROM t_users WHERE email=#{email} AND pwd=#{pwd}
     </select>
 
     <insert id="reg">
@@ -50,4 +50,15 @@
     <update id="updateInfo">
         UPDATE t_users SET age=#{age},owner=#{owner},gender=#{gender},username=#{username},activated=NOW() WHERE uid=#{uid}
     </update>
+
+    <select id="rank" resultType="com.tour.app.model.entity.Users">
+        SELECT
+            *
+        FROM
+            t_users
+        WHERE
+            uid IN ( SELECT fanid id FROM t_following GROUP BY fanid ORDER BY COUNT( fanid ) DESC )
+
+            LIMIT 4
+    </select>
 </mapper>

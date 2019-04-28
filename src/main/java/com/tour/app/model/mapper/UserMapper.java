@@ -32,4 +32,6 @@ public interface UserMapper {
 
      Integer updateInfo(Users users);
 
+     List<Users> rank();
+
 }

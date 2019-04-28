@@ -47,7 +47,7 @@
                 <div class="content">
                   <form method="post" class="form-validate">
                     <div class="form-group">
-                      <input v-model="username" placeholder="请输入用户名" id="login-username" type="text" name="loginUsername" required data-msg="Please enter your username" class="input-material">
+                      <input v-model="email" placeholder="请输入邮箱" id="login-username" type="text" name="loginUsername" required data-msg="Please enter your username" class="input-material">
                       <label for="login-username" class="label-material"></label>
                     </div>
                     <div class="form-group">
@@ -83,21 +83,19 @@
       let vm = new Vue({
         el:'#login1',
         data:{
-          username:'',
+          email:'',
           pwd:''
         },
         created(){
-
           sessionStorage.removeItem('user')
-
         },
         methods:{
 
           submit(e){
 
             e.preventDefault();
-            if(this.username===''){
-              alert('请输入用户名')
+            if(this.email===''){
+              alert('请输入账号')
               return;
             }
             if(this.pwd===''){
@@ -105,7 +103,7 @@
               return;
             }
 
-            let postData=`username=${this.username}&pwd=${this.pwd}`
+            let postData=`email=${this.email}&pwd=${this.pwd}`
 
             axios.post('/login',postData).then(res=>{
 

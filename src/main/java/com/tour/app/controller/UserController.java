@@ -136,6 +136,18 @@ public class UserController {
 
     }
 
+    @GetMapping("/user/{id}")
+    @ResponseBody
+    public Object findUserByid(@PathVariable("id")Integer id){
+
+        Users info = userMapper.info(id);
+
+
+        return info;
+
+    }
+
+
     @ResponseBody
     @GetMapping("/user/del/{id}")
     public Object del(@PathVariable(value = "id")Integer id){

@@ -140,7 +140,7 @@
                     <div class="info">
                         <div>
                           <p class="owner" th:text="${'昵称:'+user.username}"></p>
-                          <p class="owner" th:text="${'生日:'+user.age}"></p>
+                          <p class="owner" th:text="${user.age}=='null'?'生日:保密':${'生日:'+user.age}"></p>
                             <p class="owner" th:text="${'性别:'+user.gender==1?'男':'女'}"></p>
                           <div class="white-button button">
                               <a href="#"  class="follow">关注</a>
@@ -157,7 +157,7 @@
                         <div class="info">
                         <div>
 
-                          <p class="owner" th:text="${'个人简介:'+user.owner}"></p>
+                          <p class="owner" style="word-break: break-all;width: 300px" th:text="${'个人简介:'+user.owner}"></p>
                           
                           <div class="white-button button">
                               <a href="#" class="follow">关注</a>
