@@ -166,13 +166,14 @@ public class ContentController {
 
     @ResponseBody
     @GetMapping(path = "/con/{uid}/{pageSize}/{pageNum}")
-    public Object infoByUser(@PathVariable("uid")Integer id, @PathVariable(value = "pageSize")Integer pageSize,
+    public Object infoByUser(@PathVariable("uid")Integer id,
+                             @PathVariable(value = "pageSize")Integer pageSize,
                        @PathVariable(value = "pageNum")Integer pageNum){
 
 
        PageHelper.startPage(pageSize,pageNum);
 
-        List<Contents> contents = contentMapper.allByUser(id);
+        List<Contents> contents = contentMapper.allById(id);
 
         PageInfo<Contents> pageInfo= new PageInfo<>(contents);
 

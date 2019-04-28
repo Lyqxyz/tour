@@ -27,4 +27,9 @@
     <select id="findMyFans" resultType="com.tour.app.model.entity.Following">
         SELECT * FROM t_following WHERE fanid=#{fanid}
     </select>
+    <delete id="del">
+
+        DELETE FROM  t_following WHERE id=#{id}
+
+    </delete>
 </mapper>

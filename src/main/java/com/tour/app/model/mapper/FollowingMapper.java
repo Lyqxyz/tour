@@ -16,4 +16,6 @@ public interface FollowingMapper {
 
     List<Following> findMyFans(Integer id);
 
+    Integer del(Integer id);
+
 }

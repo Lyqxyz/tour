@@ -44,6 +44,20 @@ public class FollowingController {
     }
 
     @ResponseBody
+    @GetMapping("/del/{id}")
+    public Object del(@PathVariable("id")Integer id){
+
+        Integer del = followingMapper.del(id);
+
+        ResponseInfo ok = ReponseUtil.ok();
+
+        ok.setMsg("取消成功");
+
+        return ok;
+
+    }
+
+    @ResponseBody
     @PostMapping("/add")
     public Object add(Following following){
 
@@ -66,6 +80,17 @@ public class FollowingController {
 
             return error;
         }
+    }
 
+    @GetMapping("/fanView")
+    public String fan(){
+
+        return "admin/followingTable";
+    }
+
+    @GetMapping("/fanedView")
+    public String faned(){
+
+        return "admin/followedTable";
     }
 }

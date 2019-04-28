@@ -30,5 +30,7 @@ public interface ContentMapper {
 
     List<Contents> allByUserHits(Integer uid);
 
+    List<Contents> allById(Integer id);
+
 
 }

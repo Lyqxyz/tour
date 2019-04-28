@@ -43,7 +43,7 @@
               <!-- Navbar Header-->
               <div class="navbar-header">
                 <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
-                  <div class="brand-text d-none d-lg-inline-block"><span>旅游</span><strong>日志</strong></div>
+                  <div class="brand-text d-none d-lg-inline-block"><span>旅游</span><strong><a th:href="@{/home}">日志</a> </strong></div>
                   <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
                 <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
               </div>
@@ -74,14 +74,14 @@
           </div>
           <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
           <ul class="list-unstyled">
-                    <li><a th:href="@{/home}"> <i class="icon-home"></i>主页</a></li>
+                    <li><a th:href="@{'/person/'+${session.user.uid}}"> <i class="icon-home"></i>主页</a></li>
                     <li><a th:href="@{/con/user}"> <i class="icon-grid"></i>我的旅游日志</a></li>
                     <li><a th:href="@{/con/addView}"> <i class="icon-padnote"></i>旅游日志添加 </a></li>
                     <li><a th:href="@{/comm/user}"> <i class="icon-padnote"></i>我的评论</a></li>
                     <li><a href="#index" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows">个人管理</i></a>
                       <ul id="index" class="collapse list-unstyled ">
-                        <li><a href="#">我关注的</a></li>
-                        <li><a href="#">关注我的</a></li>
+                        <li><a th:href="@{/fan/fanView}">我关注的</a></li>
+                        <li><a th:href="@{/fan/fanedView}">关注我的</a></li>
                         <li><a th:href="@{/user/info}">信息更改</a></li>
                       </ul>
                     </li>

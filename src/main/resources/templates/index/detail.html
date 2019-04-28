@@ -50,13 +50,12 @@
 					<img th:src="@{*{thumbImg}}" alt=" " class="img-responsive">
 					<h2 th:text="*{title}"></h2>
 					<ul>
-					
 						<li><span class="glyphicon glyphicon-text-width" aria-hidden="true"></span><a href="#" th:text="*{slug}"></a></li>
 						<li><span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a href="#" th:text="*{tags}"></a></li>
 						<li><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><a href="#" th:text="*{created}"></a></li>
 						<li><span class="glyphicon glyphicon-globe" aria-hidden="true"></span><a href="#" th:text="*{type}"></a></li>
 						<li><a href="#" id="hits"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></a><a id="num" href="#" th:text="*{hits}"></a></li>
-
+						<li><span class="glyphicon glyphicon-globe" aria-hidden="true"></span><a th:href="@{/person/{id}(id=*{authorId})}">他的主页</a></li>
 					</ul>
 					<p th:text="*{content}"></p>
 

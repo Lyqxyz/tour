@@ -10,8 +10,7 @@ import java.util.Date;
  * @author biezhi
  */
 @Data
-
-public class Comments  {
+public class Comments extends Users {
 
     private Integer coid;
 
