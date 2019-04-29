@@ -16,10 +16,7 @@ import com.tour.app.untils.ReponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -54,9 +51,10 @@ public class UserController {
 
     @PostMapping("/reg")
     @ResponseBody
-    public Object reg(Users users){
+    public Object reg(Users users, @RequestParam("code") String code){
 
-        ResponseInfo reg = userService.reg(users);
+        ResponseInfo reg = userService.reg(users,code);
+
         return reg;
     }
     @ResponseBody

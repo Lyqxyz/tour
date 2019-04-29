@@ -15,7 +15,9 @@
 
     <insert id="reg">
 
-        INSERT INTO t_users(uid,username,pwd,state,created) VALUES(NULL,#{username},#{pwd},0,NOW())
+        INSERT INTO t_users(uid,username,pwd,state,created,email,phone)
+        VALUES
+        (NULL,#{username},#{pwd},1,NOW(),#{email},#{phone})
     </insert>
     <select id="check" resultType="com.tour.app.model.entity.Users">
          SELECT * FROM t_users WHERE username=#{username}

@@ -25,7 +25,7 @@ public class MailTest {
         System.out.println(i);
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 //        #ilngavjrwfefdjjf
-        mailMessage.setTo("2638794969@qq.com");
+        mailMessage.setTo("lu951384850@163.com");
 
         mailMessage.setFrom("951384850@qq.com");
 

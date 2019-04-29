@@ -68,7 +68,7 @@
                     </div>
 
                     <div class="form-group">
-                      <input placeholder="请输入确认验证码" v-model="code" id="registercode" type="password" name="registerPassword" required data-msg="Please enter your password" class="input-material">
+                      <input placeholder="请输入确认验证码" v-model="code" id="registercode" type="text" name="registerPassword" required data-msg="Please enter your password" class="input-material">
                       <label for="register-password" class="label-material"></label>
                     </div>
                     <div class="form-group">
@@ -126,7 +126,8 @@
         },
         methods:{
           sub(e){
-            e.preventDefault();
+
+            e.preventDefault()
             if(this.username===''){
 
               alert('请输入用户名')
@@ -147,19 +148,21 @@
               alert('两次密码不一样')
               return;
             }
-            this.checkPhone();
+
+            this.checkPhone(e);
+
             if(this.code===''){
               alert('请输入验证码')
               return;
             }
-            let postData=`username=${this.username}&pwd=${this.pwd}`
+            let postData=`username=${this.username}&pwd=${this.pwd}
+            &email=${this.email}&phone=${this.phone}&code=${this.code}`
 
             axios.post('/reg',postData).then(res=>{
 
               let {code,msg}=res.data;
 
               if(code==='-1'){
-
                 alert(msg)
               }else{
                 alert(msg)
@@ -174,7 +177,7 @@
           },
           send(e){
             this.btn.setAttribute('disabled','disabled')
-            let i = 10;
+            let i = 120;
             this.id = setInterval(()=>{
               this.emailText=i+'后才能发送'
               i--
@@ -185,7 +188,9 @@
               }
             },1000)
           },
-          checkPhone(){
+          checkPhone(e){
+
+            e.preventDefault();
             let  isPhone = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/
             if(isPhone.test(this.phone)){
               let url =  `/user/phone/${this.phone}`
@@ -207,7 +212,9 @@
               return;
             }
           },
-          checkEmail(){
+          checkEmail(e){
+
+            e.preventDefault();
             let email =/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
             if(email.test(this.email)){
               let url =  `/user/email/${this.email}`
@@ -219,6 +226,12 @@
                 }else{
                   this.okemail=1
 
+                  axios.post("/email/send",`email=${this.email}`).then(res=>{
+
+                    let { code ,msg}=res.data
+
+                    alert(msg)
+                  })
                   this.send()
                 }
               }).catch(err=>{
