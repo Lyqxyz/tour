@@ -122,6 +122,8 @@ public class UserService {
             return error;
         }else{
 
+            users.setPwd(users.getPwd().trim());
+
             Integer reg = userMapper.reg(users);
 
             ResponseInfo ok = ReponseUtil.ok();
