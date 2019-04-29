@@ -10,7 +10,7 @@ import java.util.Date;
  * @author biezhi
  */
 @Data
-public class Comments extends Users {
+public class Comments {
 
     private Integer coid;
 
@@ -44,6 +44,12 @@ public class Comments extends Users {
 
     // 评论状态
     private String state;
+
+    private String username;
+
+    private String logged;
+
+    private String email;
 
 //    // 父级评论
 //    private Integer parent;

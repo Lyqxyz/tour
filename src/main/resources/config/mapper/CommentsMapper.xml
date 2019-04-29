@@ -13,8 +13,7 @@
     </insert>
     <select id="selectByCid" resultType="com.tour.app.model.entity.Comments">
 
-        SELECT * FROM t_comments WHERE state=1 AND cid=#{id}
-
+         SELECT c.cid,c.content,c.created, u.username,u.logged,u.email FROM t_comments c,t_users u WHERE author_id = uid AND c.state=1 AND cid=#{id}
     </select>
 
     <update id="updateById">

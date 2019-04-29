@@ -66,13 +66,13 @@
 					<div class="comments-grids" th:if="${#lists.size(comments)>0}">
 						<div class="comments-grid" th:each="item:${comments}">
 							<div class="comments-grid-left">
-								<img th:src="@{/index/images/13.jpg}" alt=" " class="img-responsive">
+								<img th:src="@{${item.logged}}" alt="用户头像" class="img-responsive">
 							</div>
 							<div class="comments-grid-right">
-								<h4><a href="#" th:text="${item.author}"></a></h4>
+								<h4><a href="#" th:text="${item.username}"></a></h4>
 								<ul>
 									<li th:text="${item.created}">25 May 2016 <i>|</i></li>
-									<li><a href="#" th:text="${item.mail}"></a></li>
+									<li><a href="#" th:text="${item.email}"></a></li>
 								</ul>
 								<p th:text="${item.content}"></p>
 							</div>
@@ -85,8 +85,8 @@
 					<h3>留下你的评论</h3>
 					<form action="#" method="post">
 						<input id="cid" ref="cid" type="hidden" th:value="${detail.cid}">
-						<input v-model="name" type="text" value="Name " name="name" placeholder="请输入名字">
-						<input v-model="email" type="email" value="Email" name="email" placeholder="请输入邮箱">
+<!--						<input v-model="name" type="text" value="Name " name="name" placeholder="请输入名字">-->
+<!--						<input v-model="email" type="email" value="Email" name="email" placeholder="请输入邮箱">-->
 						<textarea v-model="content" type="text" name="comment" placeholder="请输入评论"></textarea>
 						<input @click="sub" type="submit" value="提交评论">
 					</form>
@@ -108,8 +108,8 @@
 		el:'#comm',
 		data:{
 
-			name:'',
-			email:'',
+			// name:'',
+			// email:'',
 			content:''
 
 		},
@@ -128,16 +128,16 @@
 					window.location='/loginView'
 					return;
 				}
-				if(this.name===''){
-
-					alert('请留下你的姓名')
-					return;
-				}
-				if(this.email===''){
-
-					alert('请留下你的邮箱')
-					return;
-				}
+				// if(this.name===''){
+				//
+				// 	alert('请留下你的姓名')
+				// 	return;
+				// }
+				// if(this.email===''){
+				//
+				// 	alert('请留下你的邮箱')
+				// 	return;
+				// }
 				if(this.content===''){
 
 					alert('请留下你的评论')
@@ -149,8 +149,8 @@
 					return;
 				}
 
-				let data =`cid=${cid}&author=${this.name}
-							&authorId=${user.uid}&mail=${this.email}&content=${this.content}`;
+				let data =`cid=${cid}&author=admin
+							&authorId=${user.uid}&mail=951384@qq.com&content=${this.content}`;
 				axios.post('/comm/add',data).then(res=>{
 
 					let {code,msg} =res.data;
