@@ -25,6 +25,10 @@ public class UserService {
 
     public ResponseInfo login(Users users, HttpSession session){
 
+
+        users.setPwd(users.getPwd().trim());
+        users.setEmail(users.getEmail().trim());
+
         Users login = userMapper.login(users);
 
         if(Objects.isNull(login)){
@@ -123,6 +127,8 @@ public class UserService {
         }else{
 
             users.setPwd(users.getPwd().trim());
+
+            users.setEmail(users.getEmail().trim());
 
             Integer reg = userMapper.reg(users);
 
