@@ -4,11 +4,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sun.net.httpserver.HttpsConfigurator;
-import com.tour.app.model.entity.Comments;
-import com.tour.app.model.entity.Contents;
-import com.tour.app.model.entity.ResponseInfo;
-import com.tour.app.model.entity.Users;
+import com.tour.app.model.entity.*;
 import com.tour.app.model.mapper.ContentMapper;
+import com.tour.app.model.mapper.FollowingMapper;
 import com.tour.app.model.mapper.UserMapper;
 import com.tour.app.service.UserService;
 import com.tour.app.untils.FileUploadUtil;
@@ -39,6 +37,9 @@ public class UserController {
 
     @Autowired
     ContentMapper contentMapper;
+
+    @Autowired
+    FollowingMapper followingMapper;
 
     @PostMapping("/login")
     @ResponseBody
@@ -185,7 +186,26 @@ public class UserController {
 
 
     @GetMapping("/person/{id}")
-    public String getPerson(@PathVariable("id")Integer id, Model model){
+    public String getPerson(@PathVariable("id")Integer id, Model model,HttpSession session){
+
+
+        Users user = (Users)session.getAttribute("user");
+
+        Following following = new Following();
+
+        following.setUid(user.getUid());
+
+        following.setFanid(id);
+        Following has = followingMapper.has(following);
+
+        if(Objects.isNull(has)){
+
+            model.addAttribute("has",1);
+
+        }else{
+
+            model.addAttribute("has",0);
+        }
 
         Users info = userMapper.info(id);
 

@@ -69,7 +69,7 @@ public class FollowingController {
 
             ResponseInfo ok = ReponseUtil.ok();
 
-            ok.setMsg("你以成功关注");
+            ok.setMsg("你已成功关注");
 
             return ok;
         }else{

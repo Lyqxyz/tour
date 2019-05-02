@@ -18,4 +18,6 @@ public interface FollowingMapper {
 
     Integer del(Integer id);
 
+    Following has(Following following);
+
 }

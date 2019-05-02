@@ -69,4 +69,11 @@ public class IndexController {
         return "index/detail";
 
     }
+
+    @GetMapping("/")
+    public String index(){
+
+
+        return "redirect:/home";
+    }
 }

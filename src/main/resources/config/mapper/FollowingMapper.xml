@@ -32,4 +32,8 @@
         DELETE FROM  t_following WHERE id=#{id}
 
     </delete>
+    <select id="has" resultType="com.tour.app.model.entity.Following">
+        SELECT * FROM t_following WHERE fanid=#{fanid} and uid=#{uid}
+
+    </select>
 </mapper>
