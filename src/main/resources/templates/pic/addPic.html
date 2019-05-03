@@ -70,7 +70,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 form-control-label" for="picF">选择照片</label>
                           <div class="col-sm-6">
-                            <input @change="fileChange" id="picF" type="file" multiple="multiple" accept="image/*"
+                            <input ref="file" @change="fileChange" id="picF" type="file" multiple="multiple" accept="image/*"
                                    class="form-control form-control-warning"><small style="color:red">一本相册只能放30张照片-----当前相册还能放 <strong>{{num}}</strong>  张</small>
                           </div>
                         </div>
@@ -80,6 +80,7 @@
                           <div class="col-sm-9 offset-sm-3">
                             <button @click="upload" class="btn btn-info" v-if="num>0">上传照片</button>
                             <a th:href="@{/pc/add}" class="btn btn-info">添加相册</a>
+                            <button @click="reset" class="btn btn-info">清空选择照片</button>
                           </div>
                         </div>
                       </form>
@@ -89,10 +90,14 @@
               </div>
 
               <div class="row">
-                <div class="col-3" v-for="item in pics">
+                <div class="col-3" v-for="(item,index) in pics" :key="item.id">
                   <img :src="item.path" alt="" width="100%">
+                  <button @click="del(item,index)" class="btn btn-danger">删除</button>
                 </div>
               </div>
+
+              <div class="line"></div>
+
               <div class="row">
                 <div class="col-3" v-for="item in url">
                   <img :src="item" alt="" width="100%">
@@ -133,6 +138,7 @@
         methods:{
 
           nameChange(e){
+            e.preventDefault()
             console.log(this.pc)
             let id = e.target.value
             axios.get('/pic/pid/'+id).then(res=>{
@@ -143,6 +149,45 @@
           upload(e){
             e.preventDefault();
 
+            if(this.pc===''){
+              alert('请选择相册')
+              return;
+            }
+
+            if (this.files.length<=0){
+
+              alert('请选择图片')
+              return;
+            }
+
+            let user = JSON.parse(sessionStorage.getItem('user'))
+
+            let fd = new FormData()
+
+            fd.append('pid',this.pc)
+
+            fd.append('uid',user.uid)
+            for(let i = 0 ;i<this.files.length; i++ ){
+
+              fd.append('file',this.files[i])
+            }
+
+            axios.post('/pic/addpic',fd,{
+              headers:{
+                'Content-Type':'multipart/form-data'
+              }
+            }).then(res=>{
+              let {msg} = res.data
+              this.files=[]
+              this.url=[]
+              this.pc=''
+              this.pics=[]
+              this.$refs.file.value=''
+              alert(msg)
+
+            }).catch(err=>{
+              console.log(err)
+            })
 
 
           },
@@ -164,7 +209,6 @@
             this.files=[]
             this.url=[]
             this.files = e.target.files
-
             for(let i = 0 ;i<this.files.length; i++ ){
 
               let fr = new FileReader()
@@ -174,14 +218,33 @@
               fr.onload=(e)=>{
 
                 this.url.push(e.target.result)
+
               }
             }
             console.log(this.url)
 
+          },
+          del(item,index){
+
+            axios.get(`/pic/del/${item.id}`).then(res=>{
+
+
+              alert(res.data.msg)
+              this.pics.splice(index,1);
+            }).catch(err=>{
+              console.log(err)
+            })
+
+          },
+          reset(e){
+            e.preventDefault()
+            this.url=[]
+            this.files=[]
+
+            this.$refs.file.value=''
           }
         },
         computed:{
-
           num(){
             return 30-this.pics.length-this.files.length
           }

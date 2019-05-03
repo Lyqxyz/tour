@@ -6,4 +6,21 @@
     <select id="selectPic" resultType="com.tour.app.model.entity.Pic">
         SELECT * FROM t_pic WHERE pid= #{pid}
     </select>
+
+    <select id="selectLimit" resultType="com.tour.app.model.entity.Pic">
+         SELECT * FROM t_pic WHERE uid=#{uid} ORDER BY created DESC LIMIT 30
+    </select>
+
+    <insert id="add">
+        INSERT INTO t_pic ( id, uid, pid, path, state, created )
+        VALUES(NULL,#{uid},#{pid},#{path},1,NOW())
+    </insert>
+
+    <delete id="del">
+        DELETE
+        FROM
+            t_pic
+        WHERE
+            id=#{id}
+    </delete>
 </mapper>

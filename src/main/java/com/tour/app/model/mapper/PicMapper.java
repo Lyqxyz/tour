@@ -10,4 +10,9 @@ public interface PicMapper {
 
     List<Pic> selectPic(Integer pid);
 
+    Integer add(Pic pic);
+
+    Integer del(Integer id);
+
+    List<Pic> selectLimit(Integer uid);
 }

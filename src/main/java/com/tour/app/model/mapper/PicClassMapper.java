@@ -13,4 +13,5 @@ public interface PicClassMapper {
     List<PicClass> allByUser(Integer id);
 
     Integer update(PicClass picClass);
+
 }
