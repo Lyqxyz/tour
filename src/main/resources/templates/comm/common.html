@@ -85,6 +85,13 @@
                         <li><a th:href="@{/user/info}">信息更改</a></li>
                       </ul>
                     </li>
+                    <li><a href="#pic" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows">我的相册</i></a>
+                      <ul id="pic" class="collapse list-unstyled ">
+                        <li><a th:href="@{/pc/add}">我的分类</a></li>
+                        <li><a th:href="'#'">添加图片</a></li>
+                      </ul>
+                    </li>
+
                   <li th:if="${session.user.state}==1"><a href="#admin" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows">管理员管理</i></a>
                     <ul id="admin" class="collapse list-unstyled ">
                       <li><a th:href="@{/con/updateView}">日志审核</a></li>

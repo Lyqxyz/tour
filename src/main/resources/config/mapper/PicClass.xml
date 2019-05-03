@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tour.app.model.mapper.PicClassMapper">
+
+    <insert id="add">
+        INSERT INTO t_picclass ( id, uid, `name`, created, state )
+        VALUES(NULL,#{uid},#{name},NOW(),1)
+    </insert>
+
+    <select id="allByUser" resultType="com.tour.app.model.entity.PicClass">
+
+        SELECT * FROM t_picclass WHERE uid=#{uid}
+    </select>
+
+    <update id="update">
+        UPDATE t_picclass SET `name` =#{name} WHERE id=#{id}
+
+    </update>
+
+</mapper>
