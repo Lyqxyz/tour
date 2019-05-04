@@ -1,7 +1,9 @@
 package com.tour.app.controller;
 
 import com.tour.app.model.entity.Pic;
+import com.tour.app.model.entity.PicClass;
 import com.tour.app.model.entity.ResponseInfo;
+import com.tour.app.model.mapper.PicClassMapper;
 import com.tour.app.model.mapper.PicMapper;
 import com.tour.app.service.PicService;
 import com.tour.app.untils.FileUploadUtil;
@@ -23,6 +25,9 @@ public class PicController {
 
     @Autowired
     PicService picService;
+
+    @Autowired
+    PicClassMapper picClassMapper;
 
     @GetMapping("/add")
     public String add(){
@@ -64,13 +69,48 @@ public class PicController {
         return pics;
     }
 
+    @ResponseBody
+    @GetMapping("/pidlimit/{id}")
+    public Object selectByPidLimit(@PathVariable("id")Integer id){
+
+
+        List<Pic> pics = picMapper.selectLimit(id);
+
+        return pics;
+    }
+
     @GetMapping("/user/{id}")
     public String infoView(@PathVariable("id")Integer id, Model model){
 
         model.addAttribute("uid",id);
 
+        List<Pic> pics = picMapper.selectLimit(id);
+
+        model.addAttribute("pics",pics);
+
+        model.addAttribute("pc","相册");
+
         return "pic/index";
 
     }
 
+
+    @GetMapping("/user/{id}/{pid}")
+    public String infoView(@PathVariable("id")Integer id,@PathVariable("pid")Integer pid, Model model){
+
+        model.addAttribute("uid",id);
+
+        List<Pic> pics = picMapper.selectLimit(id);
+
+        List<Pic> pics1 = picMapper.selectPic(pid);
+
+        model.addAttribute("pics",pics1);
+
+        PicClass picClass = picClassMapper.selectName(pid);
+
+        model.addAttribute("pc",picClass.getName());
+
+        return "pic/index";
+
+    }
 }

@@ -19,4 +19,10 @@
 
     </update>
 
+    <select id="selectName" resultType="com.tour.app.model.entity.PicClass">
+
+        SELECT * FROM t_picclass WHERE id=#{id}
+
+    </select>
+
 </mapper>

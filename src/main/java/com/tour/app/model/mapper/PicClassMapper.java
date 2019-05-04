@@ -14,4 +14,6 @@ public interface PicClassMapper {
 
     Integer update(PicClass picClass);
 
+    PicClass selectName(Integer id);
+
 }

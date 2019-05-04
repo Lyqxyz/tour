@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,14 +51,12 @@
     <a href="#" class="fh5co-offcanvass-close js-fh5co-offcanvass-close">菜单 <i class="icon-cross"></i> </a>
     <h1 class="fh5co-logo"><a class="navbar-brand" href="index.html">admin</a></h1>
     <ul>
-        <li class="active"><a href="index.html">主页</a></li>
-        <li><a href="#">相册</a></li>
-        <select style="width:100%;outline-color: aqua">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
+        <li class="active"><a th:href="@{'/person/'+${uid}}">主页</a></li>
+        <li><a th:href="@{'/pic/user/'+${uid}}">相册</a></li>
+        <select @change="nameChange" v-model="pc" id="tag" class="form-control">
+            <option v-for="item in pcs" :key="item.id" :value="item.id">{{item.name}}</option>
         </select>
-        <input type="hidden" th:value="${uid}">
+        <input type="hidden" th:value="${uid}" id="uid">
         <!-- <li><a href="pricing.html">Pricing</a></li>
         <li><a href="contact.html">Contact</a></li> -->
     </ul>
@@ -76,7 +74,7 @@
         <div class="row">
             <div class="col-md-12">
                 <a href="#" class="fh5co-menu-btn js-fh5co-menu-btn">菜单<i class="icon-menu"></i></a>
-                <a class="navbar-brand" href="index.html">相册</a>
+                <a class="navbar-brand" href="index.html" th:text="${pc}">相册</a>
             </div>
         </div>
     </div>
@@ -84,15 +82,13 @@
 <!-- END .header -->
 <div id="fh5co-main">
     <div class="container">
-
         <div class="row">
-
             <div id="fh5co-board" data-columns>
-
-
-                <div class="item">
+                <div class="item" th:each="item :${pics}">
                     <div class="animate-box">
-                        <a th:href="@{/pic/images/img_30.jpg}" class="image-popup fh5co-board-img"><img th:src="@{/pic/images/img_30.jpg}" alt="Free HTML5 Bootstrap template"></a>
+                        <a th:href="@{${item.path}}" class="image-popup fh5co-board-img">
+                            <img th:src="@{${item.path}}" alt="Free HTML5 Bootstrap template">
+                        </a>
                     </div>
                 </div>
             </div>
@@ -142,6 +138,36 @@
 <script th:src="@{/js/axios.min.js}"></script>
 
 <script>
+    let vm = new Vue({
+
+        el: '#fh5co-offcanvass',
+        created() {
+
+            let a = document.getElementById('uid')
+            this.uid = a.value
+            axios.get(`/pc/info/${this.uid}`).then(res => {
+
+                this.pcs = res.data;
+
+                console.log(this.pcs)
+            }).catch(err => {
+
+                console.log(err)
+            })
+
+            console.log(a.value)
+        },
+        data: {
+            uid: '',
+            pcs: [],
+            pc: ''
+        },
+        methods: {
+            nameChange(e) {
+               window.location=`/pic/user/${this.uid}/${this.pc}`
+            },
+        }
+    })
 
 </script>
 </body>
