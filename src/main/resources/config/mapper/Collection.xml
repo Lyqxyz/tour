@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tour.app.model.mapper.CollectionMapper">
+    <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+
+        INSERT INTO t_collection ( id, uid, cid, oid, title, created )
+        VALUES
+            ( NULL, #{uid}, #{cid}, #{oid}, #{title},NOW())
+    </insert>
+
+    <select id="selectByUser" resultType="com.tour.app.model.entity.Collection">
+        SELECT * FROM t_collection WHERE uid=#{uid}
+    </select>
+
+    <select id="has" resultType="com.tour.app.model.entity.Collection">
+        SELECT * FROM t_collection WHERE uid=#{uid} AND cid=#{cid}
+    </select>
+
+    <delete id="del">
+        DELETE FROM t_collection WHERE id=#{id}
+    </delete>
+</mapper>

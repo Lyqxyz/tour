@@ -49,13 +49,16 @@
 				<div class="single-left1 w3ls-5" th:object="${detail}">
 					<img th:src="@{*{thumbImg}}" alt=" " class="img-responsive">
 					<h2 th:text="*{title}"></h2>
+					<input type="hidden" name="title" id="title" th:value="*{title}">
 					<ul>
 						<li><span class="glyphicon glyphicon-text-width" aria-hidden="true"></span><a href="#" th:text="*{slug}"></a></li>
 						<li><span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a href="#" th:text="*{tags}"></a></li>
 						<li><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><a href="#" th:text="*{created}"></a></li>
 						<li><span class="glyphicon glyphicon-globe" aria-hidden="true"></span><a href="#" th:text="*{type}"></a></li>
 						<li><a href="#" id="hits"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></a><a id="num" href="#" th:text="*{hits}"></a></li>
+						<li><a href="#" id="collection">收藏</a></li>
 						<li><span class="glyphicon glyphicon-globe" aria-hidden="true"></span><a th:href="@{/person/{id}(id=*{authorId})}">他的主页</a></li>
+						<input id="authorId" type="hidden" th:value="*{authorId}">
 					</ul>
 					<p th:text="*{content}"></p>
 
@@ -85,6 +88,7 @@
 					<h3>留下你的评论</h3>
 					<form action="#" method="post">
 						<input id="cid" ref="cid" type="hidden" th:value="${detail.cid}">
+
 <!--						<input v-model="name" type="text" value="Name " name="name" placeholder="请输入名字">-->
 <!--						<input v-model="email" type="email" value="Email" name="email" placeholder="请输入邮箱">-->
 						<textarea v-model="content" type="text" name="comment" placeholder="请输入评论"></textarea>
@@ -174,6 +178,11 @@
 
 	let flag= false;
 	let cidObj = $('#cid')
+
+	let authorId = $('#authorId')
+
+	let title =$('#title')
+
 	let obj =$('#num')
 	$('#hits').click((e)=>{
 
@@ -202,6 +211,39 @@
 
 			alert('你已经点过赞了!!!')
 		}
+	})
+
+	$('#collection').click((e)=>{
+		e.preventDefault()
+		let user = JSON.parse(sessionStorage.getItem('user'))
+		if(user===null){
+			alert("你还没有登录")
+			window.location ="/loginView"
+			return;
+		}
+		let author = authorId.val()
+
+		let cid = cidObj.val();
+
+		let titleC = title.val();
+
+		let uid = user.uid
+
+		let postData =`uid=${uid}&cid=${cid}&title=${titleC}&oid=${author}`
+
+		 axios.post('/collection/add',postData).then(res=>{
+
+		 	let {code,msg} =res.data;
+
+		 	alert(msg)
+
+		 }).catch(err=>{
+
+		 	console.log(err)
+		 })
+
+		console.log(postData)
+
 	})
 
 

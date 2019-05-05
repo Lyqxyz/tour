@@ -161,12 +161,7 @@
         el:'#user',
 
         created(){
-
-
-
           let user = JSON.parse(sessionStorage.getItem('user'))
-
-
           axios.get(`/user/${user.uid}`).then(res=>{
 
             user = res.data;
