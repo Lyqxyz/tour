@@ -161,6 +161,24 @@
         el:'#user',
 
         created(){
+
+          let data_now = new Date()
+
+          let year = data_now.getFullYear();
+
+          let month = data_now.getMonth()+1<10?'0'+(data_now.getMonth()+1):(data_now.getMonth()+1)
+
+          let date = data_now.getDate()<10?'0'+(data_now.getDate()):(data_now.getDate())
+
+          let ymd = `${year}-${month}-${date}`
+
+          let d = document.querySelector('#birthday')
+
+          let ymd1 = `${year-120}-${month}-${date}`
+
+          d.setAttribute('max',ymd)
+          d.setAttribute('min',ymd1)
+
           let user = JSON.parse(sessionStorage.getItem('user'))
           axios.get(`/user/${user.uid}`).then(res=>{
 
