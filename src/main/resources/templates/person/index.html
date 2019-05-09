@@ -74,7 +74,7 @@
 
         <div class="sidebar-navigation hidde-sm hidden-xs">
             <div class="logo">
-                <a th:href="@{/con/addView}" th:text="${user.username+'的个人主页'}">个人主页</a>
+                <a href="#" th:text="${user.username+'的个人主页'}">个人主页</a>
             </div>
             <nav>
                 <ul>
@@ -113,15 +113,23 @@
                             所有日志
                         </a>
                     </li>
-<!--                    <li>-->
-<!--                        <a href="#contact">-->
-<!--                            <span class="rect"></span>-->
-<!--                            <span class="circle"></span>-->
-<!--                            Contact Us-->
-<!--                        </a>-->
-<!--                    </li>-->
+                    <li>
+                        <a th:href="@{/con/addView}" id="goBack">
+                            <span class="rect"></span>
+                            <span class="circle"></span>
+                            返回
+                        </a>
+                    </li>
                 </ul>
             </nav>
+            <script>
+               let a= $('#goBack')
+               a.click(()=>{
+                   let h = a.attr('href')
+
+                   window.location=h
+                })
+            </script>
             <ul class="social-icons">
                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -160,7 +168,7 @@
                         <div class="info">
                             <div>
                               <p class="owner" style="word-break: break-all;width: 300px" th:text="${'个人简介:'+user.owner}"></p>
-                                <div class="white-button button" th:if="${has==0}">
+                                <div class="white-button button">
                                     <a th:href="@{'/pic/user/'+${user.uid}}" disabled="disabled">相册</a>
                                 </div>
                             </div>

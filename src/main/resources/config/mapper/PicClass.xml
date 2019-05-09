@@ -24,5 +24,12 @@
         SELECT * FROM t_picclass WHERE id=#{id}
 
     </select>
+    <delete id="del">
+        DELETE
+        FROM
+            t_picclass
+        WHERE
+            id=#{id}
+    </delete>
 
 </mapper>

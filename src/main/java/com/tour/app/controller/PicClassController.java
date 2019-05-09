@@ -55,6 +55,18 @@ public class PicClassController {
 
     }
 
+    @ResponseBody
+    @GetMapping("/del/{id}")
+    public Object del(@PathVariable("id")Integer id){
+
+        Integer del = picClassMapper.del(id);
+
+        ResponseInfo ok = ReponseUtil.ok();
+
+        ok.setMsg("删除成功");
+
+        return ok;
+    }
 
     @GetMapping("/add")
     public String add(){

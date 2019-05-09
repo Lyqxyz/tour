@@ -75,8 +75,9 @@
                         </div>
                         <div class="form-group row">
                           <div class="col-sm-4 offset-sm-3">
-                            <button type="submit" @click="save" class="btn btn-primary">添加</button>
-                            <button type="submit" @click="update" class="btn btn-primary">修改</button>
+                            <button type="submit" @click="save" class="btn btn-primary">添加相册</button>
+                            <button type="submit" @click="update" class="btn btn-primary">修改相册</button>
+                            <button type="submit" @click="del" class="btn btn-danger">删除相册</button>
                           </div>
                         </div>
                       </form>
@@ -130,6 +131,11 @@
           },
           save(e){
             e.preventDefault()
+
+            if(this.className===''){
+              alert('请填写相册名')
+              return;
+            }
             for (let i = 0 ;i<this.pcs.length;i++ ){
               if(this.pcs[i].name===this.className){
                 alert('已经存在了')
@@ -148,7 +154,6 @@
             })
           },
           nameChange(e){
-
             for (let i = 0 ;i<this.pcs.length;i++ ){
               if(this.pcs[i].id==e.target.value){
 
@@ -160,7 +165,6 @@
 
             console.log(e.target.value)
           },
-
           update(e){
 
             e.preventDefault()
@@ -180,6 +184,29 @@
               this.className=''
             }).catch(err=>{
             })
+          },
+          del(e){
+
+            e.preventDefault()
+            if(this.info===null){
+              alert("请选择要删除的相册，删除后不可复原！！")
+              return;
+            }
+            axios.get(`/pc/del/${this.info.id}`).then(res=>{
+
+              alert(res.data.msg)
+
+              this.className=''
+              this.init()
+
+            }).catch(err=>{
+              console.log(err)
+
+              alert('删除失败')
+            })
+
+
+
           }
 
         }
