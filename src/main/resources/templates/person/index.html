@@ -148,8 +148,8 @@
                     <div class="info">
                         <div>
                           <p class="owner" th:text="${'昵称:'+user.username}"></p>
-                          <p class="owner" th:text="${user.age}=='null'?'生日:保密':${'生日:'+user.age}"></p>
-                            <p class="owner" th:text="${'性别:'+user.gender==1?'男':'女'}"></p>
+                          <p class="owner" th:text="${user.age}==null?'生日:保密':${'生日:'+user.age}"></p>
+                            <p class="owner" th:text="${user.gender==1?'性别:+男':'性别:女'}"></p>
                           <div class="white-button button" th:if="${has==1}">
                               <a href="#" class="follow">关注</a>
                           </div>
@@ -167,7 +167,7 @@
                         <div class="image"></div>
                         <div class="info">
                             <div>
-                              <p class="owner" style="word-break: break-all;width: 300px" th:text="${'个人简介:'+user.owner}"></p>
+                              <p class="owner" style="word-break: break-all;width: 300px" th:text="${user.owner}==null?'主人太懒，什么也没有留下':${'个人简介:'+user.owner}"></p>
                                 <div class="white-button button">
                                     <a th:href="@{'/pic/user/'+${user.uid}}" disabled="disabled">相册</a>
                                 </div>
@@ -183,33 +183,41 @@
 
         <script>
 
-            let a = $('.follow')
-           a.on('click',()=>{
-
-
+            window.onload=()=>{
+                console.log('aaaaaaaaa')
                 let fanid  = $('#uid').val()
 
+                let follow = $('.follow')
                 let user = JSON.parse(sessionStorage.getItem('user'))
 
-                if(user===null){
+                console.log(fanid,user.uid)
+                if(parseInt(fanid)===parseInt(user.uid)){
 
-                    alert('你还没有登录');
+                    follow.hide();
+                }else{
+                    console.log('bbbbbbbbbbb')
+                    follow.on('click',()=>{
 
-                    window.location ='/loginView'
+                        if(user===null){
+
+                            alert('你还没有登录');
+
+                            window.location ='/loginView'
+                        }
+                        let data = `uid=${user.uid}&fanid=${fanid}`
+                        axios.post('/fan/add',data).then(res=>{
+                            let {code,msg} = res.data
+                            follow.attr('disabled','disabled')
+                            follow.text('已关注')
+                            alert(msg)
+                        })
+
+
+                    })
                 }
-
-                let data = `uid=${user.uid}&fanid=${fanid}`
-
-                axios.post('/fan/add',data).then(res=>{
-                    let {code,msg} = res.data
-
-                    a.attr('disabled','disabled')
-                    a.text('已关注')
-                    alert(msg)
-                })
+            }
 
 
-            })
         </script>
 
         <div class="page-content">
