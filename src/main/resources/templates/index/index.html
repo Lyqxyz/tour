@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>主页</title>
+<title th:text="${session.user}==null?'主页':'欢迎'+${session.user.username}">主页</title>
 <link th:href="@{/index/css/bootstrap.css}" rel="stylesheet" type="text/css" media="all">
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script th:src="@{/index/js/jquery-1.11.0.min.js}"></script>
@@ -56,7 +56,7 @@
 									<li><a th:href="@{/home}">主页</a></li>
 									<li><a th:href="@{/spot/all}">景点</a></li>
 									<li><a th:href="@{/con/info}">旅游日志</a></li>
-									<li><a th:href="@{/like}">猜你喜欢</a></li>
+									<li><a th:href="@{/like}">排行榜</a></li>
 									<li><a th:href="@{/loginView}" th:if="${session.user}==null">登录</a></li>
 									<li><a th:href="@{/con/addView}" th:if="${session.user}!=null">个人中心</a></li>
 									<li><a th:href="@{/logout}" th:if="${session.user}!=null">注销</a></li>
@@ -108,7 +108,7 @@
 			   <div class="flexslider">
 				 <ul class="slides">
 					   <li th:each="item:${spots}">
-						   <img th:src="@{${item.spotpic}}" class="img-responsive" alt="" width="500" height="300">
+						   <img th:src="@{${item.spotpic}}" class="img-responsive" alt="" width="850" height="450">
 						   <h3 ><a th:href="@{${item.spoturl}}" th:text="${item.spotname}"></a> </h3>
 						   <p th:text="${item.spotaddress}"></p>
 					   </li>
@@ -194,8 +194,8 @@
 	<div class="content-middle wthree">
 				<div class="container">
 					<div class="mid-content wow fadeInRight animated" data-wow-delay=".5s">
-						<h3>广告精选</h3>
-						<p>喝好酒就上酒仙网</p>
+						<h3>本月活动</h3>
+						<p>有奖征集旅行日志</p>
 						<a class="hvr-sweep-to-right more-in" th:href="@{https://m.jiuxian.com}">了解更多</a>
 					</div>
 				</div>
