@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>5xx</title>
+    <style>
+        .con{
+            display: flex;
+            justify-content: center;
+
+            align-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="con">
+        <h3>服务器崩溃。。。<a href="#" id="back">返回</a></h3>
+    </div>
+</body>
+<script>
+    window.onload=()=>{
+
+        let a  = document.querySelector('#back')
+        a.onclick=()=>{
+            window.history.go(-1)
+        }
+    }
+</script>
+</html>
