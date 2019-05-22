@@ -153,8 +153,8 @@
 					return;
 				}
 
-				let data =`cid=${cid}&author=admin
-							&authorId=${user.uid}&mail=951384@qq.com&content=${this.content}`;
+				let data =`cid=${cid}&author=${user.username}
+							&authorId=${user.uid}&mail=${user.email}&content=${this.content}`;
 				axios.post('/comm/add',data).then(res=>{
 
 					let {code,msg} =res.data;
